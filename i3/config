@@ -79,6 +79,8 @@ mode "resize" {
         bindsym $mod+r mode "default"
 }
 
+for_window [class="Git-gui--askpass"] floating enable
+
 bindsym $mod+r mode "resize"
 new_window pixel 1
 
