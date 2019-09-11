@@ -45,9 +45,9 @@ set autoindent expandtab shiftwidth=4 softtabstop=4
 " filetype specific key bindings
 augroup vimrc
     autocmd!
-    au BufRead *.py nnoremap <leader>r :! python3 %<cr>
-    au BufRead *.go nnoremap <leader>r :! go run<cr>
-    au BufRead *.rs nnoremap <leader>r :! cargo run<cr>
-    au BufRead *.c nnoremap <leader>r :! gcc % -o /tmp/tempProgram && /tmp/tempPrograml<cr>
+    au BufEnter *.py nnoremap <leader>r :! python3 %<cr>
+    au BufEnter *.go nnoremap <leader>r :! go run .<cr>
+    au BufEnter *.rs nnoremap <leader>r :! cargo run<cr>
+    au BufEnter *.c nnoremap <leader>r :! gcc % -o /tmp/tempProgram && /tmp/tempProgram<cr>
     au BufWritePost * Neomake
 augroup END
