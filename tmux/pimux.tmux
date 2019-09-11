@@ -38,7 +38,7 @@ setw -g window-status-activity-style bg=$BACKGROUND,fg=$ACTIVITY,dim
 ## Cannot use:
 ##  - screen-bce, screen-256color-bce: tmux does not support bce
 ##  - screen-256color: vim broken without -bce
-set -g default-terminal "screen-256color"
+set -g default-terminal "st-256color"
 
 # Base index ( start counting from 1 )
 set -g base-index 1
