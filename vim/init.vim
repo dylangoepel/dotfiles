@@ -1,12 +1,21 @@
+" plugins
+call plug#begin('~/.config/nvim/.plugged')
+Plug 'neomake/neomake'
+Plug 'morhetz/gruvbox'
+Plug 'kien/ctrlp.vim'
+Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+Plug 'tpope/vim-fugitive'
+call plug#end()
+
+let g:deoplete#enable_at_startup = 1
+" look
 set background=dark
+set cursorline relativenumber number
 colorscheme gruvbox
 
-set cursorline relativenumber number
-
-map <Space> <leader>
-omap <Space> <Right>
-
-let leader="ö"
+" keybindings
+let mapleader=","
+map ö <leader>
 nnoremap <leader>a :Gwrite<cr>
 nnoremap <leader>u :Gpush<cr>
 nnoremap <leader>l :Gpull<cr>
@@ -14,9 +23,13 @@ nnoremap <leader>L :Glog<cr>
 nnoremap <leader>c :Gcommit<cr>
 nnoremap <leader>g :Git 
 nnoremap <leader>sv :source $MYVIMRC<cr>
-nnoremap <leader>ev :vplit $MYVIMRC<cr>
+nnoremap <leader>m :! make<cr>
+nnoremap <C-l> <C-w>l
+nnoremap <C-h> <C-w>h
+nnoremap <C-j> <C-w>j
+nnoremap <C-k> <C-w>k
 
-noremap <c-l> <c-o>:lnext<cr>
+noremap <c-e> <c-o>:lnext<cr>
 
 inoremap jk <esc>
 inoremap <esc> <nop>
@@ -26,4 +39,15 @@ inoremap <right> <nop>
 inoremap <left> <nop>
 inoremap <down> <nop>
 
+" indentation
 set autoindent expandtab shiftwidth=4 softtabstop=4
+
+" filetype specific key bindings
+augroup vimrc
+    autocmd!
+    au BufRead *.py nnoremap <leader>r :! python3 %<cr>
+    au BufRead *.go nnoremap <leader>r :! go run<cr>
+    au BufRead *.rs nnoremap <leader>r :! cargo run<cr>
+    au BufRead *.c nnoremap <leader>r :! gcc % -o /tmp/tempProgram && /tmp/tempPrograml<cr>
+    au BufWritePost * Neomake
+augroup END

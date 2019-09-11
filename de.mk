@@ -1,4 +1,3 @@
-
 de: xorg i3 startx
 
 xorg: /usr/bin/Xorg

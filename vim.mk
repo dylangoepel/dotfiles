@@ -1,18 +1,14 @@
-vim: nvim 
-
-nvim: /usr/bin/nvim ~/.config/nvim/init.vim
+vim: /usr/bin/nvim ~/.config/nvim/init.vim
 
 /usr/bin/nvim:
 	$(install) neovim
 
-~/.config/nvim/init.vim: vim/init.vim ~/.config/nvim/colors/gruvbox.vim
+~/.config/nvim/init.vim: vim/init.vim ~/.config/nvim/init.vim ~/.local/share/nvim/site/autoload/plug.vim /usr/bin/python3
+	sudo pip3 install pynvim
+	mkdir -p ~/.config/nvim
 	cp vim/init.vim ~/.config/nvim/init.vim
 
-# the gruvbox color scheme
-~/.config/nvim/colors/gruvbox.vim:
-	mkdir -p ~/.config/nvim/colors
-	mkdir -p ~/.config/nvim/autoload
-	git clone https://github.com/morhetz/gruvbox/
-	cp -r gruvbox/autoload/* ~/.config/nvim/autoload
-	cp -r gruvbox/colors/* ~/.config/nvim/colors
-	rm -rf gruvbox
+# plug.vim
+~/.local/share/nvim/site/autoload/plug.vim: 
+	curl -fLo ~/.local/share/nvim/site/autoload/plug.vim --create-dirs \
+	    https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
