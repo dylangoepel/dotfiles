@@ -40,10 +40,10 @@ inoremap <right> <nop>
 inoremap <left> <nop>
 inoremap <down> <nop>
 
-nnoremap <C-l> :vert resize +1
-nnoremap <C-h> :vert resize -1
-nnoremap <C-j> :resize -1
-nnoremap <C-k> :resize +1
+nnoremap <C-l> :vert resize +1<cr>
+nnoremap <C-h> :vert resize -1<cr>
+nnoremap <C-j> :resize -1<cr>
+nnoremap <C-k> :resize +1<cr>
 
 " indentation
 set autoindent expandtab shiftwidth=4 softtabstop=4
