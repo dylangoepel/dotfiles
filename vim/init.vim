@@ -31,6 +31,7 @@ nnoremap <C-k> <C-w>k
 
 noremap <c-e> <c-o>:lnext<cr>
 
+tnoremap jk <C-\><C-n>
 inoremap jk <esc>
 inoremap <esc> <nop>
 
@@ -38,6 +39,11 @@ inoremap <up> <nop>
 inoremap <right> <nop>
 inoremap <left> <nop>
 inoremap <down> <nop>
+
+nnoremap <C-l> :vert resize +1
+nnoremap <C-h> :vert resize -1
+nnoremap <C-j> :resize -1
+nnoremap <C-k> :resize +1
 
 " indentation
 set autoindent expandtab shiftwidth=4 softtabstop=4
