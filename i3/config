@@ -16,6 +16,7 @@ bindsym $mod+Return exec st
 bindsym $mod+q kill
 bindsym $mod+d exec dmenu_run
 
+bindsym $mod+F2 exec chromium
 bindsym $mod+h focus left
 bindsym $mod+j focus down
 bindsym $mod+k focus up
@@ -82,8 +83,34 @@ mode "resize" {
 for_window [class="Git-gui--askpass"] floating enable
 
 bindsym $mod+r mode "resize"
+
+exec --no-startup-id compton
+exec --no-startup-id nitrogen --restore
+
+# color defines for zenburn styled i3
+set $bg     #2c2c2e
+set $fg     #9f9f9f
+set $hi     #efef8f
+set $ac     #a0afa0
+set $tx     #040404
+set $ia     #8f8f8f
+set $be     #8faf9f
+set $yw     #ccdc90
+set $gn     #88b090
+set $rd     #e89393
+
+# set some nice colors      border     background  text
+client.focused              $ac        $ac         $tx
+client.unfocused            $bg        $bg         $ia
+client.focused_inactive     $bg        $bg         $ac
+client.urgent               $rd        $rd         $tx
+
 new_window pixel 1
 
 bar {
         status_command i3status
+        modifier Mod4
+        mode hide
 }
+
+gaps inner 10
