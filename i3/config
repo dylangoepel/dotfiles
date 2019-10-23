@@ -3,9 +3,9 @@ floating_modifier $mod
 font pango:Hack 8
 
 bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +5%
-bindsym F12 exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +10%
+bindsym F3 exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +10%
 bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -5%
-bindsym F11 exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -10%
+bindsym F2 exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -10%
 bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle
 bindsym XF86AudioNext exec --no-startup-id cmus-remote --next
 bindsym XF86AudioPrev exec --no-startup-id cmus-remote --prev
@@ -84,7 +84,6 @@ for_window [class="Git-gui--askpass"] floating enable
 
 bindsym $mod+r mode "resize"
 
-exec --no-startup-id compton
 exec --no-startup-id nitrogen --restore
 
 # color defines for zenburn styled i3

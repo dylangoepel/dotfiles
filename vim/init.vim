@@ -11,6 +11,7 @@ let g:deoplete#enable_at_startup = 1
 " look
 set background=dark
 set cursorline relativenumber number
+set foldmethod=syntax foldlevelstart=0
 colorscheme gruvbox
 
 " keybindings
@@ -28,6 +29,7 @@ nnoremap <C-l> <C-w>l
 nnoremap <C-h> <C-w>h
 nnoremap <C-j> <C-w>j
 nnoremap <C-k> <C-w>k
+
 
 noremap <c-e> <c-o>:lnext<cr>
 
@@ -53,7 +55,10 @@ augroup vimrc
     autocmd!
     au BufEnter *.py nnoremap <leader>r :! python3 %<cr>
     au BufEnter *.go nnoremap <leader>r :! go run .<cr>
+    au BufEnter *.go nnoremap <leader>f zfi{
     au BufEnter *.rs nnoremap <leader>r :! cargo run<cr>
+    au BufEnter *.rs nnoremap <leader>f zfi{
     au BufEnter *.c nnoremap <leader>r :! gcc % -o /tmp/tempProgram && /tmp/tempProgram<cr>
+    au BufEnter *.rs nnoremap <leader>f zfi{
     au BufWritePost * Neomake
 augroup END
