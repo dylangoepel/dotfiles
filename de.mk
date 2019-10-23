@@ -1,6 +1,6 @@
 de: xorg i3 startx nitrogen sddm compton
 
-xorg: /usr/bin/Xorg /etc/X11/xorg.conf.d/xorg.conf
+xorg: /usr/bin/Xorg
 /usr/bin/Xorg:
 	$(install) xorg
 
