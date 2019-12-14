@@ -11,7 +11,6 @@ let g:deoplete#enable_at_startup = 1
 " look
 set background=dark
 set cursorline relativenumber number
-set foldmethod=syntax foldlevelstart=0
 colorscheme gruvbox
 
 " keybindings
