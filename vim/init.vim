@@ -6,6 +6,8 @@ Plug 'kien/ctrlp.vim'
 Plug 'tpope/vim-fugitive'
 Plug 'scrooloose/nerdtree'
 Plug 'airblade/vim-rooter'
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
 call plug#end()
 
 if &term == 'xterm-256color' || &term == 'screen-256color'
@@ -21,6 +23,7 @@ endif
 let g:rooter_silent_chdir = 1
 
 let g:deoplete#enable_at_startup = 1
+
 " look
 set background=dark
 set cursorline relativenumber number
@@ -37,10 +40,13 @@ nnoremap <leader>c :Gcommit<cr>
 nnoremap <leader>g :Git 
 nnoremap <leader>sv :source $MYVIMRC<cr>
 nnoremap <leader>m :! make<cr>
+nnoremap <Left> :tabprevious<cr>
+nnoremap <Right> :tabnext<cr>
 nnoremap <C-l> <C-w>l
 nnoremap <C-h> <C-w>h
 nnoremap <C-j> <C-w>j
 nnoremap <C-k> <C-w>k
+nnoremap <C-cr> :vsplit
 
 nnoremap <C-f> :NERDTreeToggle<cr>
 
@@ -84,3 +90,15 @@ set mouse=a
 set guioptions-=m
 set guioptions-=T
 set guioptions-=r
+
+if !exists('g:airline_symbols')
+    let g:airline_symbols = {}
+endif
+
+let g:airline_left_sep = ''
+let g:airline_left_alt_sep = ''
+let g:airline_right_sep = ''
+let g:airline_right_alt_sep = ''
+let g:airline_symbols.branch = ''
+let g:airline_symbols.readonly = ''
+let g:airline_symbols.linenr = ''

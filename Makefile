@@ -1,9 +1,9 @@
 install = sudo pacman -S --needed --noconfirm -q
 
-all: vim de tmux bash extra st
+all: vim de tmux zsh extra st
 
-# bash
-include bash.mk
+# zsh
+include zsh.mk
 
 # tmux
 include tmux.mk

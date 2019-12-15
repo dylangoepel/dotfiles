@@ -17,6 +17,8 @@ bindsym $mod+Return exec st
 bindsym $mod+q kill
 bindsym $mod+d exec dmenu_run
 
+bindsym $mod+u exec st sudo pacman --noconfirm -Syu
+bindsym $mod+Shift+r exec i3 reload
 bindsym $mod+F2 exec chromium
 bindsym $mod+F3 exec pavucontrol
 bindsym $mod+h focus left
@@ -68,7 +70,6 @@ bindsym $mod+Shift+9 move container to workspace $ws9
 bindsym $mod+Shift+0 move container to workspace $ws10
 
 bindsym $mod+Shift+c reload
-bindsym $mod+Shift+r restart
 bindsym $mod+Shift+e exit 
 
 mode "resize" {
