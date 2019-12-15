@@ -15,9 +15,13 @@ i3: /usr/bin/i3 ~/.config/i3/config
 /usr/bin/i3:
 	$(install) i3
 
-~/.config/i3/config: i3/config
+~/.config/i3/config: i3/config ~/.config/i3/volume.sh
 	mkdir -p ~/.config/i3/
 	cp i3/config $@
+
+~/.config/i3/volume.sh: i3/volume.sh
+	mkdir -p ~/.config/i3/
+	cp i3/volume.sh $@
 
 nitrogen: /usr/bin/nitrogen
 /usr/bin/nitrogen:

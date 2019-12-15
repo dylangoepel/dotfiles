@@ -2,11 +2,12 @@ set $mod Mod1
 floating_modifier $mod
 font pango:Hack 8
 
-bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +5%
-bindsym F3 exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +10%
-bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -5%
-bindsym F2 exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -10%
-bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle
+bindsym XF86AudioRaiseVolume exec --no-startup-id bash ~/.config/i3/volume.sh inc
+bindsym F3 exec --no-startup-id exec bash ~/.config/i3/volume.sh inc
+bindsym XF86AudioLowerVolume exec --no-startup-id bash ~/.config/i3/volume.sh dec
+bindsym F2 exec --no-startup-id exec bash ~/.config/i3/volume.sh dec
+bindsym XF86AudioMute exec --no-startup-id bash ~/.config/i3/volume.sh mute
+bindsym F1 exec --no-startup-id exec bash ~/.config/i3/volume.sh mute
 bindsym XF86AudioNext exec --no-startup-id cmus-remote --next
 bindsym XF86AudioPrev exec --no-startup-id cmus-remote --prev
 bindsym XF86AudioPause exec --no-startup-id cmus-remote --pause
@@ -17,6 +18,7 @@ bindsym $mod+q kill
 bindsym $mod+d exec dmenu_run
 
 bindsym $mod+F2 exec chromium
+bindsym $mod+F3 exec pavucontrol
 bindsym $mod+h focus left
 bindsym $mod+j focus down
 bindsym $mod+k focus up
