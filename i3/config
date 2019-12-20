@@ -24,7 +24,7 @@ bindsym $mod+d exec dmenu_run
 
 bindsym $mod+u exec st sudo pacman --noconfirm -Syu
 bindsym $mod+Shift+r exec i3 reload
-bindsym $mod+F2 exec chromium
+bindsym $mod+F2 exec firefox
 bindsym $mod+F3 exec pavucontrol
 bindsym $mod+h focus left
 bindsym $mod+j focus down
