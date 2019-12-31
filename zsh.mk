@@ -1,4 +1,8 @@
-zsh: /usr/bin/zsh ~/.zshrc
+zsh: /usr/bin/zsh ~/.zshrc /usr/bin/vifm
+
+/usr/bin/vifm:
+	$(install) vifm
+
 /usr/bin/zsh:
 	$(install) zsh
 

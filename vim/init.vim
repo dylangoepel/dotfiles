@@ -6,8 +6,6 @@ Plug 'kien/ctrlp.vim'
 Plug 'tpope/vim-fugitive'
 Plug 'scrooloose/nerdtree'
 Plug 'airblade/vim-rooter'
-Plug 'vim-airline/vim-airline'
-Plug 'vim-airline/vim-airline-themes'
 call plug#end()
 
 if &term == 'xterm-256color' || &term == 'screen-256color'
