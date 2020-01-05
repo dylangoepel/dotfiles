@@ -12,8 +12,6 @@ Plugin 'kien/ctrlp.vim'
 Plugin 'tpope/vim-fugitive'
 Plugin 'scrooloose/nerdtree'
 Plugin 'airblade/vim-rooter'
-Plugin 'xuhdev/vim-latex-live-preview'
-Plugin 'Valloric/YouCompleteMe'
 call vundle#end()
 
 if &term == 'xterm-256color' || &term == 'screen-256color'
