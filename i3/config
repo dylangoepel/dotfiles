@@ -1,4 +1,4 @@
-set $mod Mod1
+set $mod Mod4
 floating_modifier $mod
 font pango:Hack 8
 

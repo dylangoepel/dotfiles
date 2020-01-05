@@ -1,6 +1,6 @@
 install = sudo pacman -S --needed --noconfirm -q
 
-all: vim de tmux zsh extra st
+all: vim de tmux zsh extra st kakoune
 
 # zsh
 include zsh.mk
