@@ -122,8 +122,6 @@ new_window pixel 1
 
 bar {
         status_command i3status
-        modifier Mod4
-        mode hide
 }
 
 gaps inner 10
