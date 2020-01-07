@@ -3,15 +3,15 @@ floating_modifier $mod
 font pango:Hack 8
 
 bindsym XF86AudioRaiseVolume exec --no-startup-id bash ~/.config/i3/volume.sh inc
-bindsym F3 exec --no-startup-id exec bash ~/.config/i3/volume.sh inc
+bindsym Ctrl+F3 exec --no-startup-id exec bash ~/.config/i3/volume.sh inc
 
 bindsym XF86AudioLowerVolume exec --no-startup-id bash ~/.config/i3/volume.sh dec
-bindsym F2 exec --no-startup-id exec bash ~/.config/i3/volume.sh dec
+bindsym Ctrl+F2 exec --no-startup-id exec bash ~/.config/i3/volume.sh dec
 
 bindsym XF86AudioMute exec --no-startup-id bash ~/.config/i3/volume.sh mute
-bindsym F1 exec --no-startup-id exec bash ~/.config/i3/volume.sh mute
+bindsym Ctrl+F1 exec --no-startup-id exec bash ~/.config/i3/volume.sh mute
 
-bindsym F4 exec --no-startup-id exec bash ~/.config/i3/volume.sh cycle
+bindsym Ctrl+F4 exec --no-startup-id exec bash ~/.config/i3/volume.sh cycle
 
 bindsym XF86AudioNext exec --no-startup-id cmus-remote --next
 bindsym XF86AudioPrev exec --no-startup-id cmus-remote --prev
@@ -21,8 +21,8 @@ bindsym XF86AudioStop exec --no-startup-id cmus-remote --stop
 bindsym XF86MonBrightnessUp exec --no-startup-id sudo light -A 5
 bindsym XF86MonBrightnessDown exec --no-startup-id sudo light -U 5
 
-bindsym F5 exec --no-startup-id sudo light -S 1
-bindsym F6 exec --no-startup-id sudo light -S 60
+bindsym Ctrl+F5 exec --no-startup-id sudo light -S 1
+bindsym Ctrl+F6 exec --no-startup-id sudo light -S 60
 
 bindsym $mod+Return exec st
 bindsym $mod+q kill
@@ -124,4 +124,5 @@ bar {
         status_command i3status
 }
 
-gaps inner 10
+gaps inner 5
+smart_gaps on

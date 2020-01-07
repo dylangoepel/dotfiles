@@ -1,18 +1,16 @@
 " required for vundle
 set nocompatible
 filetype off
-set rtp+=~/.vim/bundle/Vundle.vim
 
-call vundle#begin()
 filetype plugin indent on
-Plugin 'VundleVim/Vundle.vim'
-Plugin 'neomake/neomake'
-Plugin 'morhetz/gruvbox'
-Plugin 'kien/ctrlp.vim'
-Plugin 'tpope/vim-fugitive'
-Plugin 'scrooloose/nerdtree'
-Plugin 'airblade/vim-rooter'
-call vundle#end()
+call plug#begin(stdpath('data') . '/plugged')
+Plug 'neomake/neomake'
+Plug 'morhetz/gruvbox'
+Plug 'kien/ctrlp.vim'
+Plug 'tpope/vim-fugitive'
+Plug 'scrooloose/nerdtree'
+Plug 'airblade/vim-rooter'
+call plug#end()
 
 if &term == 'xterm-256color' || &term == 'screen-256color'
     let &t_SI = "\<Esc>[5 q"
@@ -52,61 +50,71 @@ nnoremap <C-h> <C-w>h
 nnoremap <C-j> <C-w>j
 nnoremap <C-k> <C-w>k
 nnoremap <C-cr> :vsplit
-nnoremap <leader>p :LLPStartPreview<cr>
 
-nnoremap <C-f> :NERDTreeToggle<cr>
-
-
+" jump to the next error
 noremap <c-e> <c-o>:lnext<cr>
 
-tnoremap jk <C-\><C-n>
+" exit using jk keys
 inoremap jk <esc>
 inoremap <esc> <nop>
 
+" dont use arrow keys
 inoremap <up> <nop>
 inoremap <right> <nop>
 inoremap <left> <nop>
 inoremap <down> <nop>
 
-nnoremap <S-l> :vert resize +5<cr>
-nnoremap <S-h> :vert resize -5<cr>
-nnoremap <S-j> :resize -5<cr>
-nnoremap <S-k> :resize +5<cr>
-
 " indentation
 set autoindent expandtab shiftwidth=4 softtabstop=4
+
+function OnPython()
+    nnoremap <leader>r : pythOn3 %<cr>
+endfunction
+
+function OnGo()
+    nnoremap <leader>r : go run .<cr>
+endfunction
+
+function OnShell()
+    nnoremap <leader>r : bash %
+endfunction
+
+function OnRust()
+    nnoremap <leader>r : cargo run<cr>
+endfunction
+
+function OnC()
+    nnoremap <leader>r : gcc % -o /tmp/tempProgram && /tmp/tempProgram<cr>
+endfunction
+
+function OnHTML()
+    nnoremap <leader>t yypli/<esc>
+endfunction
+
+function OnLatex()
+    iabbrev \documentclass{article} \documentclass{article}<cr>\usepackage[ngerman]{babel}<cr>\usepackage[utf8]{inputenc}<cr>\usepackage{}<cr>\begin{document}<cr>\end{document}<cr>
+endfunction
 
 " filetype specific key bindings
 augroup vimrc
     autocmd!
-    au BufEnter *.py nnoremap <leader>r :! python3 %<cr>
-    au BufEnter *.go nnoremap <leader>r :! go run .<cr>
-    au BufEnter *.sh nnoremap <leader>r :! bash %
-    au BufEnter *.rs nnoremap <leader>r :! cargo run<cr>
-    au BufEnter *.c nnoremap <leader>r :! gcc % -o /tmp/tempProgram && /tmp/tempProgram<cr>
-    au BufEnter *.go nnoremap <leader>f zfi{
-    au BufEnter *.rs nnoremap <leader>f zfi{
-    au BufEnter *.rs nnoremap <leader>f zfi{
-    au BufWritePost * Neomake
+    
+    " automatical file-type dependant settings
+    au BufEnter *.py call OnPython()
+    au BufEnter *.go call OnGo()
+    au BufEnter *.sh call OnShell()
+    au BufEnter *.rs call OnRust()
+    au BufEnter *.c call OnC()
+    au BufEnter *.tex call OnLatex()
+    au BufEnter *.html,*.htm call OnHTML()
 
-    au BufEnter *.html nnoremap <leader>t yypli/<esc>
+    " try to compile after every save
+    au BufWritePost * Neomake
 augroup END
 
-set mouse=a
+set mouse=a " enable mouse integration
+
+" gvim look
 set guioptions-=m
 set guioptions-=T
 set guioptions-=r
-
-if !exists('g:airline_symbols')
-    let g:airline_symbols = {}
-endif
-
-let g:airline_left_sep = ''
-let g:airline_left_alt_sep = ''
-let g:airline_right_sep = ''
-let g:airline_right_alt_sep = ''
-let g:airline_symbols.branch = ''
-let g:airline_symbols.readonly = ''
-let g:airline_symbols.linenr = ''
-
-let g:ycm_rust_src_path = '/usr/local/rust/rustc-1.8.0/src'

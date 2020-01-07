@@ -12,3 +12,5 @@ source $ZSH/oh-my-zsh.sh
 export EDITOR='vim'
 
 alias vifm='vifm -c ":only"'
+alias loadtor="proxychains aria2c -o"
+alias load="aria2c -o"
