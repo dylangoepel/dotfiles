@@ -68,7 +68,7 @@ inoremap <down> <nop>
 set autoindent expandtab shiftwidth=4 softtabstop=4
 
 function OnPython()
-    nnoremap <leader>r : pythOn3 %<cr>
+    nnoremap <leader>r : python3 %<cr>
 endfunction
 
 function OnGo()
