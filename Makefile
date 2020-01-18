@@ -1,24 +1,24 @@
 install = sudo pacman -S --needed --noconfirm -q
 
-all: vim de tmux zsh extra st kakoune bin
+all: vim de tmux shell extra st bin
 
-# zsh
-include zsh.mk
+# shell
+include mod/shell.mk
 
 # tmux
-include tmux.mk
+include mod/tmux.mk
 
 # vim
-include vim.mk
+include mod/vim.mk
 
 # desktop environment
-include de.mk
+include mod/de.mk
 
 # alacritty terminal
-include st.mk
+include mod/terminal.mk
 
 # binaries and scripts
-include bin.mk
+include mod/bin.mk
 
 # other things
-include extra.mk
+include mod/extra.mk

@@ -14,3 +14,5 @@ export EDITOR='vim'
 alias vifm='vifm -c ":only"'
 alias loadtor="proxychains aria2c -o"
 alias load="aria2c -o"
+
+alias cat="bat --style numbers"

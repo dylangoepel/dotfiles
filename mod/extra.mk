@@ -1,4 +1,4 @@
-extra: ytdl aria2 firefox hack-ttf mpv
+extra: ytdl aria2 hack-ttf mpv qutebrowser
 
 ytdl: /usr/bin/youtube-dl
 /usr/bin/youtube-dl:
@@ -11,6 +11,10 @@ aria2: /usr/bin/aria2c
 firefox: /usr/bin/firefox
 /usr/bin/firefox:
 	$(install) firefox
+
+qutebrowser: /usr/bin/qutebrowser
+/usr/bin/qutebrowser:
+	$(install) qutebrowser
 
 hack-ttf: /usr/share/fonts/TTF/Hack-Regular.ttf
 /usr/share/fonts/TTF/Hack-Regular.ttf:
