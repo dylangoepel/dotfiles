@@ -1,0 +1,6 @@
+#!/bin/sh
+cd ~/doc
+file="$(find -iname "*.pdf" | sed "s/.pdf$//g; s/^\.\///g; s/\// \/ /g" | fzf | sed "s, / ,/,g").pdf"
+zathura "$file" &
+disown
+exit
