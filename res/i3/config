@@ -30,7 +30,7 @@ bindsym $mod+d exec dmenu_run
 
 bindsym $mod+u exec st sudo pacman --noconfirm -Syu
 bindsym $mod+Shift+r exec i3 reload
-bindsym $mod+F2 exec firefox
+bindsym $mod+F2 exec qutebrowser
 bindsym $mod+F3 exec pavucontrol
 bindsym $mod+h focus left
 bindsym $mod+j focus down
@@ -82,6 +82,9 @@ bindsym $mod+Shift+0 move container to workspace $ws10
 
 bindsym $mod+Shift+c reload
 bindsym $mod+Shift+e exit 
+
+bindsym $mod+b exec --no-startup-id bib
+bindsym $mod+m exec --no-startup-id med
 
 mode "resize" {
         bindsym j resize shrink height 10 px or 10 ppt

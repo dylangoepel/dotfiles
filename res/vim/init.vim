@@ -29,9 +29,6 @@ set background=dark
 set cursorline relativenumber number
 colorscheme gruvbox
 
-" latex preview with zathura
-let g:livepreview_previewer = 'zathura'
-
 " keybindings
 let mapleader=","
 map ö <leader>
@@ -68,23 +65,23 @@ inoremap <down> <nop>
 set autoindent expandtab shiftwidth=4 softtabstop=4
 
 function OnPython()
-    nnoremap <leader>r : python3 %<cr>
+    nnoremap <leader>r :! python3 %<cr>
 endfunction
 
 function OnGo()
-    nnoremap <leader>r : go run .<cr>
+    nnoremap <leader>r :! go run .<cr>
 endfunction
 
 function OnShell()
-    nnoremap <leader>r : bash %
+    nnoremap <leader>r :! bash %<cr>
 endfunction
 
 function OnRust()
-    nnoremap <leader>r : cargo run<cr>
+    nnoremap <leader>r :! cargo run<cr>
 endfunction
 
 function OnC()
-    nnoremap <leader>r : gcc % -o /tmp/tempProgram && /tmp/tempProgram<cr>
+    nnoremap <leader>r :! gcc % -o /tmp/tempProgram && /tmp/tempProgram<cr>
 endfunction
 
 function OnHTML()
