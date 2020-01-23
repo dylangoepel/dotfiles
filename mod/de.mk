@@ -26,7 +26,7 @@ nitrogen: /usr/bin/nitrogen
 sddm: /usr/bin/sddm /usr/lib/sddm/sddm.conf.d/default.conf /etc/systemd/system/display-manager.service
 /usr/bin/sddm:
 	$(install) sddm
-	localectl set-x11-keymap de
+	sudo localectl set-x11-keymap de
 
 /usr/lib/sddm/sddm.conf.d/default.conf: res/xorg/sddm.conf
 	sudo cp $< $@

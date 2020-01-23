@@ -2,16 +2,16 @@ set $mod Mod4
 floating_modifier $mod
 font pango:Hack 8
 
-bindsym XF86AudioRaiseVolume exec --no-startup-id bash ~/.config/i3/volume.sh inc
-bindsym Ctrl+F3 exec --no-startup-id exec bash ~/.config/i3/volume.sh inc
+bindsym XF86AudioRaiseVolume exec --no-startup-id volume inc
+bindsym Ctrl+3 exec --no-startup-id volume inc
 
-bindsym XF86AudioLowerVolume exec --no-startup-id bash ~/.config/i3/volume.sh dec
-bindsym Ctrl+F2 exec --no-startup-id exec bash ~/.config/i3/volume.sh dec
+bindsym XF86AudioLowerVolume exec --no-startup-id volume dec
+bindsym Ctrl+2 exec --no-startup-id volume dec
 
-bindsym XF86AudioMute exec --no-startup-id bash ~/.config/i3/volume.sh mute
-bindsym Ctrl+F1 exec --no-startup-id exec bash ~/.config/i3/volume.sh mute
+bindsym XF86AudioMute exec --no-startup-id volume mute
+bindsym Ctrl+1 exec --no-startup-id volume mute
 
-bindsym Ctrl+F4 exec --no-startup-id exec bash ~/.config/i3/volume.sh cycle
+bindsym Ctrl+4 exec --no-startup-id volumecycle
 
 bindsym XF86AudioNext exec --no-startup-id cmus-remote --next
 bindsym XF86AudioPrev exec --no-startup-id cmus-remote --prev
@@ -21,17 +21,17 @@ bindsym XF86AudioStop exec --no-startup-id cmus-remote --stop
 bindsym XF86MonBrightnessUp exec --no-startup-id sudo light -A 5
 bindsym XF86MonBrightnessDown exec --no-startup-id sudo light -U 5
 
-bindsym Ctrl+F5 exec --no-startup-id sudo light -S 1
-bindsym Ctrl+F6 exec --no-startup-id sudo light -S 60
+bindsym Ctrl+5 exec --no-startup-id sudo light -S 1
+bindsym Ctrl+6 exec --no-startup-id sudo light -S 60
 
-bindsym $mod+Return exec st
+bindsym $mod+Return exec --no-startup-id st
 bindsym $mod+q kill
-bindsym $mod+d exec dmenu_run
+bindsym $mod+d exec --no-startup-id dmenu_run
 
-bindsym $mod+u exec st sudo pacman --noconfirm -Syu
-bindsym $mod+Shift+r exec i3 reload
-bindsym $mod+F2 exec qutebrowser
-bindsym $mod+F3 exec pavucontrol
+bindsym $mod+u exec --no-startup-id st sudo pacman --noconfirm -Syu
+bindsym $mod+Shift+r exec --no-startup-id i3 reload
+bindsym $mod+F2 exec --no-startup-id qutebrowser
+bindsym $mod+Shift+F3 exec --no-startup-id pavucontrol
 bindsym $mod+h focus left
 bindsym $mod+j focus down
 bindsym $mod+k focus up
@@ -83,7 +83,7 @@ bindsym $mod+Shift+0 move container to workspace $ws10
 bindsym $mod+Shift+c reload
 bindsym $mod+Shift+e exit 
 
-bindsym $mod+b exec --no-startup-id bib
+bindsym $mod+Shift+b exec --no-startup-id bib
 bindsym $mod+m exec --no-startup-id med
 
 mode "resize" {
