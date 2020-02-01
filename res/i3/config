@@ -30,7 +30,7 @@ bindsym $mod+d exec --no-startup-id dmenu_run
 
 bindsym $mod+u exec --no-startup-id st sudo pacman --noconfirm -Syu
 bindsym $mod+Shift+r exec --no-startup-id i3 reload
-bindsym $mod+F2 exec --no-startup-id qutebrowser
+bindsym $mod+F2 exec --no-startup-id brave
 bindsym $mod+Shift+F3 exec --no-startup-id pavucontrol
 bindsym $mod+h focus left
 bindsym $mod+j focus down
