@@ -12,8 +12,8 @@ firefox: /usr/bin/firefox
 /usr/bin/firefox:
 	$(install) firefox
 
-brave: /usr/bin/brave
-/usr/bin/brave: yay
+brave: /usr/bin/brave yay
+/usr/bin/brave:
 	yay -S --noconfirm brave-bin
 
 yay: /usr/bin/yay
