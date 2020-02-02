@@ -115,3 +115,5 @@ set mouse=a " enable mouse integration
 set guioptions-=m
 set guioptions-=T
 set guioptions-=r
+
+set foldmethod=manual
