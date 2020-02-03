@@ -3,7 +3,7 @@ python=/usr/bin/python3
 
 vim: /usr/bin/nvim ~/.config/nvim/init.vim
 
-/usr/bin/vim:
+/usr/bin/nvim:
 	$(install) neovim
 
 ~/.config/nvim/init.vim: res/vim/init.vim  $(python) ~/.local/share/nvim/site/autoload/plug.vim

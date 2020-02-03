@@ -12,6 +12,7 @@ then
     st tmux attach -t bg
     echo done.
 else
+    echo lading....
     cd ~/doc
     file="$(find /mnt ~/doc | sed -n "/.\(pdf\|epub\|xps\)$/ {s,^.*/,,g; p}" | fzf)"
     filename="$(find /mnt ~/doc -name "$file" | head -n 1)"
