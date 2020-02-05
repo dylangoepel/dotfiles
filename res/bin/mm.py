@@ -3,7 +3,7 @@ from xml.etree import ElementTree
 from time import time
 from random import randint
 from math import floor, ceil
-from sys import stderr
+from sys import stderr, exit
 
 class MindMap():
     def __init__(self, text, *children, position=None):
@@ -87,7 +87,6 @@ def loadHM(path):
         raise SyntaxError("No element in MindMap")
 
     root = root.children[-1]
-    distributeDirections(root)
 
     return root
 
@@ -119,10 +118,10 @@ if __name__ == "__main__":
 
     if sys.argv[1] == "convert":
         try:
-            with open(sys.argv[1] + ".mm") as f:
+            with open(sys.argv[2] + ".mm", "w") as f:
                 hm.output(f)
-        except:
-            print("Invalid output file", file=stderr)
+        except FileNotFoundError:
+            print("Invalid input file", file=stderr)
     elif sys.argv[1] == "quiz":
         quizzes = collectQuizzes(hm)
 
@@ -130,7 +129,17 @@ if __name__ == "__main__":
         while True:
             index = randint(0, len(quizzes) - 1)
             print("question " + str(count + 1) + ": " + str(quizzes[index][0]))
-            answer = input("> ")
+            answer = ""
+            while True:
+                try:
+                    answer = input("> ")
+                except UnicodeDecodeError:
+                    print("Invalid input.")
+                    continue
+                except KeyboardInterrupt:
+                    exit(1)
+                finally:
+                    break
 
             if "".join(answer.lower().split()) == "".join(quizzes[index][1].lower().split()):
                 print("Right")

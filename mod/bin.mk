@@ -1,4 +1,4 @@
-bin: /bin/volume /bin/productivity /bin/vim /bin/dl /bin/bib /bin/med /bin/mm fzf
+bin: /bin/volume /bin/productivity /bin/vim /bin/dl /bin/bib /bin/med /bin/mm /bin/tasks fzf
 
 fzf: /usr/bin/fzf
 /usr/bin/fzf:
