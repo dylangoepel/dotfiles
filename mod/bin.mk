@@ -1,12 +1,8 @@
-<<<<<<< HEAD
-bin: /bin/volume /bin/productivity /bin/vim /bin/dl /bin/bib /bin/med /bin/mm
-=======
-bin: fzf /bin/volume /bin/productivity /bin/vim /bin/dl /bin/bib /bin/med
+bin: /bin/volume /bin/productivity /bin/vim /bin/dl /bin/bib /bin/med /bin/mm fzf
 
 fzf: /usr/bin/fzf
 /usr/bin/fzf:
 	$(install) fzf
->>>>>>> c2738160e1062831b60a93fe40f92d070592a757
 
 /bin/%: res/bin/%.sh
 	sudo cp $< $@

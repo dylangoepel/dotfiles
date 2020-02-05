@@ -3,6 +3,7 @@ from xml.etree import ElementTree
 from time import time
 from random import randint
 from math import floor, ceil
+from sys import stderr
 
 class MindMap():
     def __init__(self, text, *children, position=None):
@@ -17,10 +18,9 @@ class MindMap():
                 'TEXT="' + str(self.text) + '" ' + ('POSITION="' + self.position + '"' if self.position is not None else "") + '>\n' +
                 "".join(list(map(lambda x: str(x), self.children))) + '</node>\n')
 
-    def write(self, path):
+    def output(self, file):
         content = ('<map version="1.0.1">\n' + str(self) + "</map>\n")
-        with open(path, "w") as f:
-            f.write(content)
+        file.write(content)
 
 def xmlToMindMap(root):
     return MindMap(root.attrib["TEXT"], *map(xmlToMindMap, root),
@@ -91,17 +91,51 @@ def loadHM(path):
 
     return root
 
+def collectQuizzes(mindMap, prefix=""):
+    quizzes = []
+
+    for branch in mindMap.children:
+        quizzes = [*quizzes, *collectQuizzes(branch, prefix=(prefix + str(mindMap.text) + "/"))]
+
+    if len(mindMap.children) == 0:
+        quizzes.append((prefix.strip("/"), mindMap.text))
+
+    return quizzes
 
 if __name__ == "__main__":
     import sys
 
-    if len(sys.argv) != 2:
-        print("Usage:", sys.argv[0], "<hm file>", file=sys.stderr)
+    if len(sys.argv) != 3:
+        print("Usage:", sys.argv[0], "<command> <hm file>", file=sys.stderr)
         sys.exit(1)
  
     try:
-        hm = loadHM(sys.argv[1])
+        hm = loadHM(sys.argv[2])
     except SyntaxError as x:
-        print(str(x))
+        print(str(x), file=stderr)
         sys.exit(1)
-    hm.write(sys.argv[1] + ".mm")
+    except FileNotFoundErro:
+        print("Invalid input file", file=stderr)
+
+    if sys.argv[1] == "convert":
+        try:
+            with open(sys.argv[1] + ".mm") as f:
+                hm.output(f)
+        except:
+            print("Invalid output file", file=stderr)
+    elif sys.argv[1] == "quiz":
+        quizzes = collectQuizzes(hm)
+
+        count = 0
+        while True:
+            index = randint(0, len(quizzes) - 1)
+            print("question " + str(count + 1) + ": " + str(quizzes[index][0]))
+            answer = input("> ")
+
+            if "".join(answer.lower().split()) == "".join(quizzes[index][1].lower().split()):
+                print("Right")
+                del quizzes[index]
+            else:
+                print("Wrong:", quizzes[index][1])
+
+            count += 1
