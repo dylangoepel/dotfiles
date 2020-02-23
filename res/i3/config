@@ -24,7 +24,7 @@ bindsym XF86MonBrightnessDown exec --no-startup-id sudo light -U 5
 bindsym Ctrl+F5 exec --no-startup-id sudo light -S 1
 bindsym Ctrl+F6 exec --no-startup-id sudo light -S 60
 
-bindsym $mod+Return exec st
+bindsym $mod+Return exec alacritty
 bindsym $mod+q kill
 bindsym $mod+d exec dmenu_run
 

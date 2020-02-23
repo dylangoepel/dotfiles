@@ -1,6 +1,6 @@
 install = sudo pacman -S --needed --noconfirm -q
 
-all: vim de tmux shell extra st bin
+all: vim de tmux shell extra term bin
 
 # shell
 include mod/shell.mk
