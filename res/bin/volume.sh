@@ -9,6 +9,8 @@ then
     lastSink=$(echo $sinks | grep -Eo "[0-9]+ {0,1}$")
 
     new=$(( ($current + 1) % ($lastSink + 1) ))
+    echo $current
+    echo $new
 
     inputs=$(pactl list sink-inputs | grep "Sink Input #" | sed "s,Sink Input #,,g")
 
