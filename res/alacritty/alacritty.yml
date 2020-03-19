@@ -14,7 +14,7 @@ scrolling:
   auto_scroll: false
 tabspaces: 8
 font:
-  size: 8
+  size: 6
   offset:
     x: 0
     y: 0
@@ -23,7 +23,7 @@ font:
     y: 0
 
   normal:
-    family: Hack
+    family: Hurmit Nerd Font Mono
     style: Regular
 
   use_thin_strokes: true

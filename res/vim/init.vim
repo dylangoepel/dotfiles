@@ -9,8 +9,14 @@ Plug 'morhetz/gruvbox'
 Plug 'kien/ctrlp.vim'
 Plug 'tpope/vim-fugitive'
 Plug 'scrooloose/nerdtree'
+Plug 'nanotech/jellybeans.vim'
 Plug 'airblade/vim-rooter'
 call plug#end()
+
+let g:jellybeans_overrides = {
+\    'background': { 'guibg': '222222' },
+\}
+colorscheme jellybeans
 
 if &term == 'xterm-256color' || &term == 'screen-256color'
     let &t_SI = "\<Esc>[5 q"
@@ -27,7 +33,6 @@ let g:ycm_rust_src_path = '/usr/local/rust/rustc-1.8.0/src'
 " look
 set background=dark
 set cursorline relativenumber number
-colorscheme gruvbox
 
 " keybindings
 let mapleader=","
