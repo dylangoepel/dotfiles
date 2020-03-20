@@ -9,4 +9,5 @@ alacritty: /usr/bin/alacritty ~/.config/alacritty/alacritty.yml
 	$(install) alacritty
 
 ~/.config/alacritty/alacritty.yml: res/alacritty/alacritty.yml
+	mkdir -p ~/.config/alacritty
 	cp res/alacritty/alacritty.yml $@

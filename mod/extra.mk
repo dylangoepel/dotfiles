@@ -27,6 +27,9 @@ qutebrowser: /usr/bin/qutebrowser
 /usr/bin/qutebrowser:
 	$(install) qutebrowser
 
+hermit:
+	yay -S nerd-fonts-hermit
+
 hack-ttf: /usr/share/fonts/TTF/Hack-Regular.ttf
 /usr/share/fonts/TTF/Hack-Regular.ttf:
 	$(install) ttf-hack

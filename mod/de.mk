@@ -1,4 +1,4 @@
-de: xorg i3 startx nitrogen sddm compton
+de: xorg i3 startx nitrogen sddm compton sxhkd
 
 xorg: /usr/bin/Xorg
 /usr/bin/Xorg:
@@ -37,3 +37,13 @@ sddm: /usr/bin/sddm /usr/lib/sddm/sddm.conf.d/default.conf /etc/systemd/system/d
 compton: /usr/bin/compton
 /usr/bin/compton:
 	$(install) compton
+
+sxhkd: /usr/bin/sxhkd ~/.config/sxhkd/sxhkdrc
+/usr/bin/sxhkd: 
+	$(install) sxhkd
+~/.config/sxhkd/sxhkdrc: res/sxhkd/sxhkdrc
+	mkdir -p ~/.config/sxhkd/
+	cp res/sxhkd/sxhkdrc $@
+
+bspwm: /usr/bin/bspwm
+	$(install) bspwm
