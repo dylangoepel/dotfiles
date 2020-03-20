@@ -1,4 +1,4 @@
-de: xorg i3 startx nitrogen sddm compton sxhkd bspwm
+de: xorg i3 startx nitrogen sddm picom sxhkd bspwm
 
 xorg: /usr/bin/Xorg
 /usr/bin/Xorg:
@@ -34,9 +34,9 @@ sddm: /usr/bin/sddm /usr/lib/sddm/sddm.conf.d/default.conf /etc/systemd/system/d
 /etc/systemd/system/display-manager.service:
 	sudo systemctl enable sddm
 
-compton: /usr/bin/compton
-/usr/bin/compton:
-	$(install) compton
+picom: /usr/bin/picom
+/usr/bin/picom:
+	$(install) picom
 
 sxhkd: /usr/bin/sxhkd ~/.config/sxhkd/sxhkdrc
 /usr/bin/sxhkd: 

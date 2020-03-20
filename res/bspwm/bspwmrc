@@ -1,6 +1,8 @@
 #! /bin/sh
 
 sxhkd &
+dunst &
+picom &
 
 count=$(xrandr --listmonitors | cut -d " " -f 3 | tail +2 | wc -l)
 
