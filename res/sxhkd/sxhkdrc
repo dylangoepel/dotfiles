@@ -22,9 +22,9 @@ XF86MonBrightnessUp
     brightness down
 
 ctrl + F5
-    sudo -light -S 1
+    brightness low
 ctrl + F6
-    sudo light -S 60
+    brightness high
 
 super + Return
     alacritty

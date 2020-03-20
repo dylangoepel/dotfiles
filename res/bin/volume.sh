@@ -41,7 +41,7 @@ then
     do
         pactl move-sink-input $input $new
     done
-    dunstify ""
+    dunstify -a "Volume" -i $iconSound "Change sound output."
 fi
 
 for sink in $sinks
