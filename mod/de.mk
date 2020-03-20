@@ -65,3 +65,7 @@ dunst: /usr/bin/dunst ~/.config/dunst/dunstrc
 amixer: /usr/bin/amixer
 /usr/bin/amixer:
 	$(install) alsa-utils
+
+light: /usr/bin/light
+/usr/bin/light:
+	$(install) light
