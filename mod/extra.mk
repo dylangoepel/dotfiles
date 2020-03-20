@@ -17,7 +17,7 @@ brave: /usr/bin/brave yay
 	yay -S --noconfirm brave-bin
 
 yay: /usr/bin/yay
-/usr/bin/yay: /usr/bin/git
+/usr/bin/yay:
 	git clone https://aur.archlinux.org/yay.git ~/yay
 	cd ~/yay; sudo -v; makepkg -si --noconfirm
 	rm -rf ~/yay
