@@ -1,4 +1,4 @@
-de: xorg i3 startx nitrogen sddm compton sxhkd
+de: xorg i3 startx nitrogen sddm compton sxhkd bspwm
 
 xorg: /usr/bin/Xorg
 /usr/bin/Xorg:
@@ -45,9 +45,19 @@ sxhkd: /usr/bin/sxhkd ~/.config/sxhkd/sxhkdrc
 	mkdir -p ~/.config/sxhkd/
 	cp res/sxhkd/sxhkdrc $@
 
-bspwm: /usr/bin/bspwm ~/.config/bspwm/bspwmrc
+bspwm: /usr/bin/bspwm ~/.config/bspwm/bspwmrc dunst
 /usr/bin/bspwm:
 	$(install) bspwm
 
 ~/.config/bspwm/bspwmrc: res/bspwm/bspwmrc
-	cp ~/.config/bspwm/bspwmrc res/bspwm/bspwmrc
+	mkdir -p ~/.config/bspwm/
+	cp res/bspwm/bspwmrc ~/.config/bspwm/bspwmrc
+	chmod +x ~/.config/bspwm/bspwmrc 
+
+dunst: /usr/bin/dunst ~/.config/dunst/dunstrc
+/usr/bin/dunst:
+	$(install) dunst
+
+~/.config/dunst/dunstrc: res/bspwm/dunstrc
+	mkdir -p ~/.config/dunst
+	cp res/bspwm/dunstrc ~/.config/dunst/dunstrc

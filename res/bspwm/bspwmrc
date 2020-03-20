@@ -2,7 +2,17 @@
 
 sxhkd &
 
-bspc monitor -d I II III IV V VI VII VIII IX X
+count=$(xrandr --listmonitors | cut -d " " -f 3 | tail +2 | wc -l)
+
+if [[ count -eq 2 ]]
+then
+    # two monitor setup
+    bspc monitor HDMI-1 -d I III V
+    bspc monitor DVI-D-1 -D II IV VI
+else
+    # single monitor setup
+    bspc monitor -d I II III IV V VI
+fi
 
 bspc config border_width         2
 bspc config window_gap          12
