@@ -17,9 +17,9 @@ XF86AudioStop
     cmus-remote --stop
 
 XF86MonBrightnessUp
-    sudo light -A 5
+    brightness up
 XF86MonBrightnessUp
-    sudo light -D 5
+    brightness down
 
 ctrl + F5
     sudo -light -S 1

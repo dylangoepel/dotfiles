@@ -13,14 +13,14 @@ function send_notification {
   iconSound="audio-volume-high"
   iconMuted="audio-volume-muted"
   if is_mute ; then
-    dunstify -i $iconMuted -r 2593 -u normal "mute"
+    dunstify -a "Volume Muted" -i $iconMuted -r 2593 -u normal "SHUT THE FUCK UP"
   else
     volume=$(get_volume)
     # Make the bar with the special character ─ (it's not dash -)
     # https://en.wikipedia.org/wiki/Box-drawing_character
-    bar=$(seq --separator="─" 0 "$((volume / 5))" | sed 's/[0-9]//g')
+    bar=$(seq --separator="─" 0 "$((volume / 5))" | sed 's/[0-9]//g')$(seq --separator=" " 0 "$(((100 - volume) / 5))" | sed 's/[0-9]//g')
     # Send the notification
-    dunstify -i $iconSound -r 2593 -u normal "    $bar"
+    dunstify -a "Volume $volume%" -i $iconSound -r 2593 -u normal "[$bar]"
   fi
 }
  
@@ -51,12 +51,12 @@ do
         # set the volume on (if it was muted)
         amixer set Master on > /dev/null
         # up the volume (+ 5%)
-        amixer sset Master 5%+ > /dev/null
+        amixer sset Master 10%+ > /dev/null
         send_notification
     elif [[ $1 == "dec" ]]
     then
         amixer set Master on > /dev/null
-        amixer sset Master 5%- > /dev/null
+        amixer sset Master 10%- > /dev/null
         send_notification
     elif [[ $1 == "mute" ]]
     then
