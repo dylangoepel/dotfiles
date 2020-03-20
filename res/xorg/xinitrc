@@ -1,2 +1,2 @@
 setxkbmap -layout de
-i3
+bspwm

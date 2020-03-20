@@ -45,5 +45,9 @@ sxhkd: /usr/bin/sxhkd ~/.config/sxhkd/sxhkdrc
 	mkdir -p ~/.config/sxhkd/
 	cp res/sxhkd/sxhkdrc $@
 
-bspwm: /usr/bin/bspwm
+bspwm: /usr/bin/bspwm ~/.config/bspwm/bspwmrc
+/usr/bin/bspwm:
 	$(install) bspwm
+
+~/.config/bspwm/bspwmrc: res/bspwm/bspwmrc
+	cp ~/.config/bspwm/bspwmrc res/bspwm/bspwmrc
