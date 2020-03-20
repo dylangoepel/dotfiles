@@ -1,4 +1,4 @@
-de: xorg i3 startx nitrogen sddm picom sxhkd bspwm
+de: xorg i3 startx nitrogen sddm picom sxhkd bspwm amixer
 
 xorg: /usr/bin/Xorg
 /usr/bin/Xorg:
@@ -61,3 +61,7 @@ dunst: /usr/bin/dunst ~/.config/dunst/dunstrc
 ~/.config/dunst/dunstrc: res/bspwm/dunstrc
 	mkdir -p ~/.config/dunst
 	cp res/bspwm/dunstrc ~/.config/dunst/dunstrc
+
+amixer: /usr/bin/amixer
+/usr/bin/amixer:
+	$(install) alsa-utils

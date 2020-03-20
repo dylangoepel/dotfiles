@@ -17,9 +17,8 @@ function send_notification {
   brightness=$(get_brightness)
   # Make the bar with the special character ─ (it's not dash -)
   # https://en.wikipedia.org/wiki/Box-drawing_character
-  bar=$(seq -s "─" 0 $((brightness / 5)) | sed 's/[0-9]//g')
   # Send the notification
-  dunstify -i "$icon" -r 5555 -u normal "    $bar"
+  dunstify -a "Brightness" -i "$icon" -r 5555 -u normal "Updated to $brightness"
 }
 
 case $1 in
@@ -32,5 +31,13 @@ case $1 in
     # decrease the backlight by 5%
     xbacklight -dec 5
     send_notification
+    ;;
+  high)
+    # set brightness to a predefined high level
+    xbacklight -set 60
+    ;;
+  low)
+    # set brightness to a predefined low level
+    xbacklight -set 10
     ;;
 esac
