@@ -1,20 +1,37 @@
 #! /bin/sh
 
-sxhkd &
-dunst &
-picom &
+run_maybe() {
+    isrunning=$(pidof $1 | wc -l)
+    if [[ $isrunning -ne 1 ]]
+    then
+        echo Running $1 ...
+        $1 &
+    fi
+}
+
+
+echo [DAEMON] Starting...
+run_maybe sxhkd
+run_maybe dunst
+run_maybe picom
+echo [DAEMON] All up now.
 
 count=$(xrandr --listmonitors | cut -d " " -f 3 | tail +2 | wc -l)
+echo [MONITOR] Detected $count 'display(s)'.
 
 if [[ count -eq 2 ]]
 then
-    # two monitor setup
-    bspc monitor HDMI-1 -d I III V
-    bspc monitor DVI-D-1 -D II IV VI
+    echo [MONITOR] Mapping I II III to HDMI-1
+    echo [MONITOR] Mapping IV V VI to DVI-D-1
+    bspc monitor 0x00400002 -d I II III
+    bspc monitor 0x00400004 -d IV V VI
 else
     # single monitor setup
+    echo [MONITOR] Mapping I III IV V VI to default monitor.
     bspc monitor -d I II III IV V VI
 fi
+
+nitrogen --restore
 
 bspc config border_width         2
 bspc config window_gap          12

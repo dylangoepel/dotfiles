@@ -35,7 +35,7 @@ super + {_,shift +}{1, 2, 3, 4, 5, 6, 7, 8, 9}
     bspc {desktop -f,node -d} ^{1,2,3,4,5,6,7,8,9}
 
 super + F2
-    brave
+    firefox
 
 super + q
     bspc node -k
@@ -48,3 +48,9 @@ super + {_, shift +}{h,j,k,l}
 
 super + {v,s}
     bspc node -p {south,east}
+super + space
+    if [ -z "$(bspc query -N -n focused.floating)" ]; then \
+        bspc node focused -t floating; \
+    else \
+        bspc node focused -t tiled; \
+    fi
