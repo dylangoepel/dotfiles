@@ -1,4 +1,4 @@
-bin: /bin/volume /bin/productivity /bin/vim /bin/dl /bin/bib /bin/med /bin/mm /bin/tasks /bin/brightness fzf
+bin: /bin/volume /bin/productivity /bin/vim /bin/dl /bin/bib /bin/med /bin/mm /bin/tasks /bin/brightness fzf /bin/bspwmresize
 
 fzf: /usr/bin/fzf
 /usr/bin/fzf:

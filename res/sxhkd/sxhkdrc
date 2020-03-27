@@ -1,9 +1,16 @@
 ctrl + F4
     volume cycle
+XF86AudioRaiseVolume
+    volume inc
 ctrl + F3
     volume inc
+XF86AudioLowerVolume
+    volume dec
 ctrl + F2
     volume dec
+
+XF86AudioMute
+    volume mute
 ctrl + F1
     volume mute
 
@@ -18,13 +25,12 @@ XF86AudioStop
 
 XF86MonBrightnessUp
     brightness up
+ctrl + F5
+    brightness up
 XF86MonBrightnessUp
     brightness down
-
-ctrl + F5
-    brightness low
 ctrl + F6
-    brightness high
+    brightness down
 
 super + Return
     alacritty
@@ -54,3 +60,11 @@ super + space
     else \
         bspc node focused -t tiled; \
     fi
+super + f
+    bspc desktop focused -l next
+
+alt + {l,h,j,k}
+    bspwmresize expand {east,west,south,north} 5
+
+alt + shift + {l,h,j,k}
+    bspwmresize shrink {west,east,north,south} 5

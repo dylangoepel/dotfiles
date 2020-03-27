@@ -2,26 +2,33 @@
 set ${1:-get}
 
 function get_volume {
-  amixer get Master | grep '%' | head -n 1 | cut -d '[' -f 2 | cut -d '%' -f 1
+  pactl list sinks | grep Volume | head -n 1 | cut -d/ -f 2 | sed -s "s, ,,g" | tr -d "%"
 }
 
 function is_mute {
-  amixer get Master | grep '%' | grep -oE '[^ ]+$' | grep off > /dev/null
+  [ $(pactl list sinks | grep Mute | sed "s,\s,,g" | cut -d: -f 2) == "yes" ]
+}
+
+function set_volume {
+    for sink in $(pactl list sinks | grep "^Sink" | grep -Eo "[0-9]+")
+    do
+        pactl set-sink-volume $sink $1
+    done
+}
+
+function set_mute {
+    for sink in $(pactl list sinks | grep "^Sink" | grep -Eo "[0-9]+")
+    do
+        pactl set-sink-mute $sink toggle
+    done
 }
 
 function send_notification {
   iconSound="audio-volume-high"
   iconMuted="audio-volume-muted"
-  if is_mute ; then
-    dunstify -a "Volume Muted" -i $iconMuted -r 2593 -u normal "SHUT THE FUCK UP"
-  else
-    volume=$(get_volume)
-    # Make the bar with the special character ─ (it's not dash -)
-    # https://en.wikipedia.org/wiki/Box-drawing_character
-    bar=$(seq --separator="─" 0 "$((volume / 5))" | sed 's/[0-9]//g')$(seq --separator=" " 0 "$(((100 - volume) / 5))" | sed 's/[0-9]//g')
-    # Send the notification
-    dunstify -a "Volume $volume%" -i $iconSound -r 2593 -u normal "[$bar]"
-  fi
+  volume=$(get_volume)
+  bar=$(seq --separator="─" 0 "$((volume / 5))" | sed 's/[0-9]//g')$(seq --separator=" " 0 "$(((100 - volume) / 5))" | sed 's/[0-9]//g')
+  is_mute && dunstify -a "Volume 0%" -i $iconMuted -r 2593 -u normal "SHUT THE FUCK UP" || dunstify -a "Volume $volume%" -i $iconSound -r 2593 -u normal "[$bar]"
 }
  
 sinks=$(pacmd list-sinks | grep index | sed "s,.*index: ,,g")
@@ -48,19 +55,15 @@ for sink in $sinks
 do
     if [[ $1 == "inc" ]]
     then
-        # set the volume on (if it was muted)
-        amixer set Master on > /dev/null
-        # up the volume (+ 5%)
-        amixer sset Master 10%+ > /dev/null
+        set_volume +5%
         send_notification
     elif [[ $1 == "dec" ]]
     then
-        amixer set Master on > /dev/null
-        amixer sset Master 10%- > /dev/null
+        set_volume -5%
         send_notification
     elif [[ $1 == "mute" ]]
     then
-        amixer set Master 1+ toggle > /dev/null
+        set_mute
         send_notification
     elif [[ $1 == "get" ]]
     then
