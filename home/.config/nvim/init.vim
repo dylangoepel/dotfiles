@@ -11,6 +11,7 @@ Plug 'tpope/vim-fugitive'
 Plug 'scrooloose/nerdtree'
 Plug 'nanotech/jellybeans.vim'
 Plug 'airblade/vim-rooter'
+Plug 'vifm/vifm.vim'
 call plug#end()
 
 let g:jellybeans_overrides = {
@@ -52,6 +53,7 @@ nnoremap <C-h> <C-w>h
 nnoremap <C-j> <C-w>j
 nnoremap <C-k> <C-w>k
 nnoremap <C-cr> :vsplit
+nnoremap <leader>f :VsplitVifm<cr>
 
 " jump to the next error
 noremap <c-e> <c-o>:lnext<cr>

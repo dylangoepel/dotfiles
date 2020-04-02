@@ -71,7 +71,7 @@ install dunst
 install picom
 
 # desktop programs
-install firefox
+install qutebrowser
 install alacritty
 install dmenu
 install pavucontrol
