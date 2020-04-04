@@ -21,7 +21,7 @@ XF86AudioPrev
 XF86AudioPause
     cmus-remote --pause
 XF86AudioStop
-    cmus-remote --stop
+    cmus-remote --stop 
 
 XF86MonBrightnessUp
     brightness up
@@ -37,34 +37,5 @@ super + Return
 super + d
     dmenu_run
 
-super + {_,shift +}{1, 2, 3, 4, 5, 6, 7, 8, 9}
-    bspc {desktop -f,node -d} ^{1,2,3,4,5,6,7,8,9}
-
 super + F2
     qutebrowser
-
-super + q
-    bspc node -c
-
-super + z
-    bspc node -s biggest
-
-super + {_, shift +}{h,j,k,l}
-    bspc node -{f,s} {west,south,north,east}
-
-super + {v,s}
-    bspc node -p {south,east}
-super + space
-    if [ -z "$(bspc query -N -n focused.floating)" ]; then \
-        bspc node focused -t floating; \
-    else \
-        bspc node focused -t tiled; \
-    fi
-super + f
-    bspc desktop focused -l next
-
-alt + {l,h,j,k}
-    bspwmresize expand {east,west,south,north} 5
-
-alt + shift + {l,h,j,k}
-    bspwmresize shrink {west,east,north,south} 5

@@ -1,0 +1,14 @@
+#!/bin/bash
+
+function time() {
+    date "+%d.%m.%Y - %H:%M"
+}
+
+function battery() {
+    for cap in $(cat /sys/class/power_supply/BAT?/capacity)
+    do
+        echo -ne "$cap% "
+    done
+}
+
+echo "$(time) -- $(battery)"

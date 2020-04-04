@@ -5,13 +5,13 @@
 # install <package>
 install() {
     echo [PKG] $1
-    sudo pacman -Qq | grep $1 >/dev/null || sudo pacman -S $1
+    sudo pacman -Qq | grep $1 >/dev/null || sudo pacman -S --noconfirm $1
 }
 
 # aur <package>
 aur() {
     echo [PKG] AUR: $1
-    yay -Qq | grep $1 >/dev/null || yay -S $1
+    yay -Qq | grep $1 >/dev/null || yay -S --noconfirm $1
 }
 
 # fromgit <url> <dir name>
@@ -26,6 +26,23 @@ fromgit() {
         cd ..
         rm -rf $2
     fi
+}
+
+makegit() {
+    echo "[PKG] $1: $2"
+    if [ ! -d "$2" ]
+    then
+        git clone "$1" "$2"
+        pushd "$2"
+        make
+        sudo make install
+    else
+        pushd "$2"
+        git pull
+        make
+        sudo make install
+    fi
+    popd
 }
 
 # updatedir <src> <dst>
@@ -51,11 +68,13 @@ clonedir() {
     done
 }
 
+mkdir -p ~/.git
+
 # aur helper
 fromgit https://aur.archlinux.org/yay.git yay
 
 # system update
-yay -Syu --noconfirm
+# yay -Syu --noconfirm
 
 # fonts
 install ttf-fira-mono
@@ -65,7 +84,7 @@ aur nerd-fonts-hermit
 install sddm
 
 # window manager
-install bspwm
+makegit https://github.com/dylangoepel/dwm.git ~/.git/dwm
 install sxhkd
 install dunst
 install picom
