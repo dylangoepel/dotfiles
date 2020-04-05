@@ -1,2 +1,2 @@
 setxkbmap -layout de
-bspwm
+dwm
