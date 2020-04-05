@@ -28,19 +28,21 @@ fromgit() {
     fi
 }
 
+makeinstall() {
+    make
+    sudo make install
+}
+
 makegit() {
     echo "[PKG] $1: $2"
     if [ ! -d "$2" ]
     then
         git clone "$1" "$2"
         pushd "$2"
-        make
-        sudo make install
+        makeinstall
     else
         pushd "$2"
-        git pull
-        make
-        sudo make install
+        git pull | grep "up to date" || makeinstall
     fi
     popd
 }
@@ -90,7 +92,7 @@ install dunst
 install picom
 
 # desktop programs
-install qutebrowser
+install vimb
 install alacritty
 install dmenu
 install pavucontrol
@@ -127,4 +129,4 @@ clonedir $PWD/home ~
 clonedir $PWD/etc /etc
 
 # systemd
-sudo systemctl enable --now sddm.service
+# sudo systemctl enable --now sddm.service
