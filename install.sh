@@ -99,7 +99,6 @@ install pavucontrol
 install zathura
 install zathura-pdf-mupdf
 install libreoffice
-install calibre
 install thunderbird
 install mpv
 
