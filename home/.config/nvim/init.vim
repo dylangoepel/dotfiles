@@ -10,7 +10,6 @@ Plug 'kien/ctrlp.vim'
 Plug 'tpope/vim-fugitive'
 Plug 'scrooloose/nerdtree'
 Plug 'nanotech/jellybeans.vim'
-Plug 'airblade/vim-rooter'
 Plug 'vifm/vifm.vim'
 call plug#end()
 
