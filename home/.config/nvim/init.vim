@@ -96,7 +96,8 @@ function OnHTML()
 endfunction
 
 function OnLatex()
-    iabbrev \documentclass{article} \documentclass{article}<cr>\usepackage[ngerman]{babel}<cr>\usepackage[utf8]{inputenc}<cr>\usepackage{}<cr>\begin{document}<cr>\end{document}<cr>
+    iabbrev \documentclass{article} \documentclass{article}<cr>\usepackage[ngerman]{babel}<cr>\usepackage[utf8]{inputenc}<cr>\begin{document}<cr>\end{document}<cr>
+    ! tmux new -d doc %
 endfunction
 
 " filetype specific key bindings

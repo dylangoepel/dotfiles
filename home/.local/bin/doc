@@ -1,0 +1,4 @@
+#!/bin/bash
+# doc <tex file>
+zathura $(echo $1 | sed "s,.tex$,.pdf,g") &
+looptex $1
