@@ -2,6 +2,7 @@
 
 while true
 do
+    echo xsetroot
     xsetroot -name "$(status)"
     sleep 5
 done

@@ -1,2 +1,3 @@
 setxkbmap -layout de
-dwm
+PATH=$PATH:~/.local/bin ~/.local/bin/bar &
+exec dwm
