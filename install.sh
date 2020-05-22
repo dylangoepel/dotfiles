@@ -116,6 +116,7 @@ install alsa-utils
 install git
 install make
 install ghc
+install xwallpaper
 
 # latex
 install texlive
