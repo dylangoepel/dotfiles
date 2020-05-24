@@ -104,6 +104,7 @@ install mpv
 
 # terminal programs
 install neovim
+install emacs
 install gcc
 install go
 install python
