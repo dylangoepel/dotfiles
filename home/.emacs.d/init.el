@@ -10,6 +10,8 @@
  (package-install 'auctex))
 (unless (package-installed-p 'key-chord)
  (package-install 'key-chord))
+(unless (package-installed-p 'display-line-numbers)
+ (package-install 'display-line-numbers))
 
 (require 'evil)
 (evil-mode 1)
@@ -22,6 +24,9 @@
 (setq TeX-parse-self t)
 
 (require 'color-theme-modern)
+
+(require 'display-line-numbers)
+(global-display-line-numbers-mode)
 
 (require 'key-chord)
 
@@ -36,7 +41,7 @@
 	(setq previewing nil))))
 
 (setq key-chord-two-keys-delay 0.5)
-(key-chord-define evil-insert-state-map "jk" 'evil-normal-state)
+(key-chord-define evil-insert-state-map "jj" 'evil-normal-state)
 (key-chord-mode 1)
 
 (custom-set-variables
@@ -44,6 +49,15 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(TeX-view-program-selection
+   (quote
+    (((output-dvi has-no-display-manager)
+      "dvi2tty")
+     ((output-dvi style-pstricks)
+      "dvips and gv")
+     (output-dvi "xdvi")
+     (output-pdf "Zathura")
+     (output-html "xdg-open"))))
  '(custom-enabled-themes (quote (desert)))
  '(custom-safe-themes
    (quote

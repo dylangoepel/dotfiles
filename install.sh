@@ -103,6 +103,7 @@ install thunderbird
 install mpv
 
 # terminal programs
+install zsh
 install neovim
 install emacs
 install gcc
