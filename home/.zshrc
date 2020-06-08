@@ -5,7 +5,9 @@ export EDITOR=nvim
 
 if [ ! -d ~/.oh-my-zsh ]
 then
+    cp ~/.zshrc ~/.zshrc.bak
     sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+    mv ~/.zshrc.bak ~/.zshrc
 fi
 
 ZSH_THEME="robbyrussell"

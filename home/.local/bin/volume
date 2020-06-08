@@ -27,8 +27,12 @@ function send_notification {
   iconSound="audio-volume-high"
   iconMuted="audio-volume-muted"
   volume=$(get_volume)
-  bar=$(seq --separator="─" 0 "$((volume / 5))" | sed 's/[0-9]//g')$(seq --separator=" " 0 "$(((100 - volume) / 5))" | sed 's/[0-9]//g')
-  is_mute && dunstify -a "Volume 0%" -i $iconMuted -r 2593 -u normal "SHUT THE FUCK UP" || dunstify -a "Volume $volume%" -i $iconSound -r 2593 -u normal "[$bar]"
+  dashes=$((volume / 2))
+  spaces=$((70 - dashes))
+  echo Dashes: $dashes
+  echo Spaces: $spaces
+  bar=$(seq --separator="─" 0 "$dashes" | sed 's/[0-9]//g')$(seq --separator=" " 0 "$spaces" | sed 's/[0-9]//g')
+  is_mute && dunstify -a "Volume 0%" -i $iconMuted -r 2593 -u normal "Muted" || dunstify -a "Volume $volume%" -i $iconSound -r 2593 -u normal "$bar"
 }
  
 sinks=$(pacmd list-sinks | grep index | sed "s,.*index: ,,g")
@@ -55,11 +59,11 @@ for sink in $sinks
 do
     if [[ $1 == "inc" ]]
     then
-        set_volume +5%
+        set_volume +2%
         send_notification
     elif [[ $1 == "dec" ]]
     then
-        set_volume -5%
+        set_volume -2%
         send_notification
     elif [[ $1 == "mute" ]]
     then
