@@ -130,5 +130,11 @@ install texlive-latexextra
 clonedir $PWD/home ~
 clonedir $PWD/etc /etc
 
+# spacemacs
+if [[ ! -d ~/.emacs.d ]]
+then
+	git clone https://github.com/syl20bnr/spacemacs ~/.emacs.d
+fi
+
 # systemd
 # sudo systemctl enable --now sddm.service
