@@ -119,6 +119,7 @@ install git
 install make
 install ghc
 install xwallpaper
+install nodejs
 
 # latex
 install texlive
