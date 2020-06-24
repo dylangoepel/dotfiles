@@ -6,6 +6,9 @@ filetype plugin indent on
 call plug#begin(stdpath('data') . '/plugged')
 Plug 'neomake/neomake'
 Plug 'gryf/wombat256grf'
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
+Plug 'neoclide/coc-vimtex'
+Plug 'lervag/vimtex'
 call plug#end()
 
 call neomake#configure#automake('nrwi', 500)
@@ -19,10 +22,8 @@ set cursorline relativenumber number
 " keybindings
 let mapleader=","
 nnoremap <leader>sv :source $MYVIMRC<cr>
-nnoremap <C-cr> :vsplit
-nnoremap <C-l> :tabnext
-nnoremap <C-h> :tabprev
-nnoremap <C-j> :ta
+nnoremap <C-l> :tabnext<cr>
+nnoremap <C-h> :tabprev<cr>
 nnoremap <leader>f :VsplitVifm<cr>
 
 " jump to the next error
