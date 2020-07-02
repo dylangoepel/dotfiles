@@ -6,12 +6,10 @@ filetype plugin indent on
 call plug#begin(stdpath('data') . '/plugged')
 Plug 'neomake/neomake'
 Plug 'gryf/wombat256grf'
-Plug 'neoclide/coc.nvim', {'branch': 'release'}
-Plug 'neoclide/coc-vimtex'
 Plug 'lervag/vimtex'
 call plug#end()
 
-call neomake#configure#automake('nrwi', 500)
+call neomake#configure#automake('w', 0)
 
 " look
 colorscheme wombat256grf
@@ -30,6 +28,9 @@ nnoremap <leader>f :VsplitVifm<cr>
 nnoremap <c-j> :lnext<cr>
 nnoremap <c-k> :lprev<cr>
 
+" open error list
+nnoremap <c-e> :lwindow<cr><c-w>p
+
 " exit using jk keys
 inoremap jk <esc>
 inoremap <esc> <nop>
@@ -45,3 +46,10 @@ set guioptions-=T
 set guioptions-=r
 
 set foldmethod=manual
+
+" vimtex
+let g:tex_flavor = "latex"
+let g:vimtex_view_general_viewer = 'zathura'
+
+" neomake
+let g:neomake_open_list = 0
