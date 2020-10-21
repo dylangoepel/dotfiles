@@ -1,4 +1,33 @@
-#!/bin/bash
-# doc <tex file>
-zathura $(echo $1 | sed "s,.tex$,.pdf,g") &
-looptex $1
+set $1 $2
+
+if [[ ! -f "$2" ]]
+then
+    touch "$2"
+    echo '\documentclass{article}' >> "$2"
+    echo '\usepackage[ngerman]{babel}' >> "$2"
+    echo '\usepackage[T1]{fontenc}' >> "$2"
+    echo '\usepackage[margin=2cm]{geometry}' >> "$2"
+    echo '\title{Titel}' >> "$2"
+    echo '\author{}' >> "$2"
+    echo '\begin{document}' >> "$2"
+    echo '\maketitle' >> "$2"
+    echo '\end{document}' >> "$2"
+fi
+
+if [ $1 == "open" ]
+then
+    (alacritty -e $0 view "$2") 2>&1 >/dev/null &
+    $0 edit "$2"
+elif [ $1 == "view" ]
+then
+    mkdir .tmp
+    (echo "$2" | entr pdflatex -halt-on-error -output-directory .tmp "$2") &
+    while [ ! -f .tmp/*.pdf ]
+    do
+        sleep 0.1
+    done
+    zathura .tmp/*.pdf
+elif [ $1 == "edit" ]
+then
+    nvim "$2"
+fi
