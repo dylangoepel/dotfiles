@@ -38,4 +38,4 @@ super + d
     dmenu_run
 
 super + F2
-    firefox
+    brave
