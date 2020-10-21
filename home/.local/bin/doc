@@ -27,6 +27,7 @@ then
         sleep 0.1
     done
     zathura .tmp/*.pdf
+    rm -rf .tmp
 elif [ $1 == "edit" ]
 then
     nvim "$2"
