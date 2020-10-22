@@ -1,6 +1,6 @@
 export ZSH=$HOME"/.oh-my-zsh"
 export PATH=$PATH:~/.local/bin:~/go/bin
-export BROWSER=firefox
+export BROWSER=brave
 export EDITOR=nvim
 
 if [ ! -d ~/.oh-my-zsh ]
