@@ -3,8 +3,8 @@ window:
     columns: 0
     lines: 0
   padding:
-    x: 0
-    y: 0
+    x: 2
+    y: 1
   dynamic_padding: false
   decorations: full
   startup_mode: Windowed
@@ -13,23 +13,23 @@ scrolling:
   history: 10000
   multiplier: 3
 font:
-  size: 7.5
+  size: 5.5
   offset:
     x: 0
-    y: 0
+    y: 2
   glyph_offset:
     x: 0
     y: 0
 
   normal:
-    family: Hurmit Nerd Font Mono
+    family: NotoSansMono Nerd Font
     style: Regular
 
-  use_thin_strokes: true
+  use_thin_strokes: false
 draw_bold_text_with_bright_colors: true
 colors:
   primary:
-    background: '0x000000'
+    background: '0x111111'
     foreground: '0xffffff'
   normal:
     black:   '0x000000'

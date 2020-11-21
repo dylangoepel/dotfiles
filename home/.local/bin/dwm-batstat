@@ -1,0 +1,23 @@
+#!/bin/sh
+ 
+bat_percent=$(upower -d | grep -Pom 1 '(?<=percentage:          )\d+')
+bat_charging=$(upower -d | grep -Pom 1 'state:\s+charging')
+ 
+if [ $bat_percent -gt 80 ]; then
+   echo -n 
+elif [ $bat_percent -gt 60 ]; then
+   echo -n 
+elif [ $bat_percent -gt 40 ]; then
+   echo -n 
+elif [ $bat_percent -gt 20 ]; then
+   echo -n 
+else
+   echo -n 
+fi
+
+echo -n "  "
+if [ ! -z $bat_charging ]; then
+    echo -n "  "
+fi
+
+echo $bat_percent%

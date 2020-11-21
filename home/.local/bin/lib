@@ -1,0 +1,19 @@
+#!/bin/bash
+
+target=$(grep -E ':$' ~/doc.db | sed -E 's,:$,,g' | fzf)
+cat ~/doc.db |
+    sed -n "/$target/,/^[^ ]/ p; /^[^ ]/ d" |
+    grep -E '^ ' |
+    sed "s/^ *//g" |
+    while read path; do
+        path=$(echo $path | sed "s,~,$HOME,g")
+        if [[ $path == *.pdf ]]; then
+            dirpath=$(dirname "$path" | sed "s,~,$HOME,g")
+            cd "$dirpath"
+            nohup zathura "$path" 2>&1 >/dev/null &
+        else
+            nohup alacritty -e nvim $path 2>&1 >/dev/null &
+        fi
+    done
+sleep 0.1
+disown -a

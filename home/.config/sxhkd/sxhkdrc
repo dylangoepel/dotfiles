@@ -23,14 +23,11 @@ XF86AudioPause
 XF86AudioStop
     cmus-remote --stop 
 
+XF86MonBrightnessDown
+    brightness down
+
 XF86MonBrightnessUp
     brightness up
-ctrl + F5
-    brightness up
-XF86MonBrightnessUp
-    brightness down
-ctrl + F6
-    brightness down
 
 super + Return
     alacritty
@@ -39,3 +36,9 @@ super + d
 
 super + F2
     brave
+
+super + o
+    alacritty -e lib &
+
+super + n
+    docpath

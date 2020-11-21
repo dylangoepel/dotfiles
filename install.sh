@@ -80,7 +80,19 @@ fromgit https://aur.archlinux.org/yay.git yay
 
 # fonts
 install ttf-fira-mono
+install ttf-linux-libertine
 aur nerd-fonts-hermit
+if [ ! -f /usr/share/fonts/TTF/Heebo-Black.ttf ]
+then
+    mkdir -p ~/Downloads
+    pushd ~/Downloads
+    if [ ! -f heebo.zip ]
+    then
+        curl https://dl.1001fonts.com/heebo.zip
+    fi
+    sudo unzip -d /usr/share/fonts/TTF heebo.zip
+    popd
+fi
 
 # login screen
 install sddm
@@ -92,6 +104,7 @@ install dunst
 install picom
 
 # desktop programs
+aur brave-bin
 install firefox
 install alacritty
 install dmenu
@@ -103,6 +116,7 @@ install thunderbird
 install mpv
 
 # terminal programs
+install fzf
 install zsh
 install neovim
 install emacs
@@ -120,6 +134,9 @@ install make
 install ghc
 install xwallpaper
 install nodejs
+
+# zsh theme
+aur zsh-theme-powerlevel9k
 
 # latex
 install texlive
