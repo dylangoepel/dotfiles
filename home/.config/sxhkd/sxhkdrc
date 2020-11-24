@@ -35,10 +35,13 @@ super + d
     dmenu_run
 
 super + F2
-    brave
+    qutebrowser
+
+super + F3
+    pavucontrol
 
 super + o
     alacritty -e lib &
 
 super + n
-    docpath
+    monitors

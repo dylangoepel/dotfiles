@@ -8,9 +8,14 @@ Plug 'neomake/neomake'
 Plug 'gryf/wombat256grf'
 Plug 'lervag/vimtex'
 Plug 'SirVer/ultisnips'
+Plug 'KeitaNakamura/tex-conceal.vim'
 call plug#end()
 
 call neomake#configure#automake('w', 0)
+
+set conceallevel=1
+let g:tex_conceal='abdmg'
+hi Conceal ctermbg=none
 
 " look
 syntax on
@@ -70,8 +75,6 @@ let g:UltiSnipsEditSplit="vertical"
 " latex
 function g:LatexMode()
     VimtexView
-    nnoremap <c-t> :VimtexTocOpen<cr>
-    nnoremap <c-c> :VimtexCompile<cr>
-    set conceallevel=3
+    VimtexCompile
 endfunction
 autocmd FileType tex :call g:LatexMode()

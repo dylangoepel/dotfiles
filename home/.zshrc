@@ -1,5 +1,5 @@
 export ZSH=$HOME"/.oh-my-zsh"
-export PATH=$PATH:~/.local/bin:~/go/bin
+export PATH=$PATH:~/.local/bin:~/go/bin:~/.cargo/bin
 export BROWSER=brave
 export EDITOR=nvim
 
