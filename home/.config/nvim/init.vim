@@ -13,22 +13,25 @@ call plug#end()
 
 call neomake#configure#automake('w', 0)
 
-set conceallevel=1
-let g:tex_conceal='abdmg'
-hi Conceal ctermbg=none
-
 " look
 syntax on
 set background=dark
 set cursorline relativenumber number
 
+
+
 " keybindings
-let mapleader="#"
+let mapleader=","
 nnoremap <leader>sv :source $MYVIMRC<cr>
 nnoremap <C-l> :tabnext<cr>
 nnoremap <C-h> :tabprev<cr>
 nnoremap <leader>f :VsplitVifm<cr>
 nnoremap <leader>m :make<cr>
+
+nnoremap <leader>e :call fzf#run({'sink': 'e', 'source': 'git ls-files -co --exclude-standard'})<cr>
+
+nnoremap <leader>tv :VimtexView<cr>
+nnoremap <leader>tc :VimtexCompile<cr>
 
 " jump to the next error
 nnoremap <c-j> :lnext<cr>
@@ -72,9 +75,11 @@ let g:UltiSnipsJumpForwardTrigger="<tab>"
 let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
 let g:UltiSnipsEditSplit="vertical"
 
-" latex
-function g:LatexMode()
-    VimtexView
-    VimtexCompile
-endfunction
-autocmd FileType tex :call g:LatexMode()
+set conceallevel=1
+let g:tex_conceal='abdmg'
+hi Conceal ctermbg=NONE
+hi Conceal ctermfg=NONE
+hi Conceal guifg=NONE
+hi Conceal guibg=NONE
+
+

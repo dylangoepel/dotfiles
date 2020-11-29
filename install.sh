@@ -107,7 +107,6 @@ install picom
 aur brave-bin
 install firefox
 install alacritty
-install dmenu
 install pavucontrol
 install zathura
 install zathura-pdf-mupdf

@@ -10,13 +10,15 @@ then
     mv ~/.zshrc.bak ~/.zshrc
 fi
 
+export FZF_BASE=/usr/share/fzf
+export FZF_DEFAULT_COMMAND=fzf
 ZSH_THEME="agnoster"
 
 DISABLE_AUTO_UPDATE="true"
 
 COMPLETION_WAITING_DOTS="true"
 
-plugins=(git)
+plugins=(git fzf)
 
 source $ZSH/oh-my-zsh.sh
 
