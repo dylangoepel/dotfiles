@@ -94,11 +94,14 @@ then
     popd
 fi
 
+mkdir -p ~/dev
+
 # login screen
 install sddm
 
 # window manager
-makegit https://github.com/dylangoepel/dwm.git ~/.git/dwm
+makegit https://github.com/dylangoepel/dwm.git ~/dev/dwm
+makegit https://github.com/dylangoepel/dmenu.git ~/dev/dwm
 install sxhkd
 install dunst
 install picom
