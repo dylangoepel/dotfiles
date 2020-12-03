@@ -30,7 +30,7 @@ XF86MonBrightnessUp
     brightness up
 
 super + Return
-    if test -z "$(cat ~/.current_project)"; then alacritty; else alacritty -e bash <(fw gen-workon `cat ~/.current_project`; echo zsh); fi
+    if test ! -f $HOME/.current_project; then alacritty; else alacritty -e bash <(fw gen-workon `cat ~/.current_project`; echo zsh); fi
 super + d
     dmenu_run
 
@@ -47,4 +47,4 @@ super + n
     monitors
 
 super + p
-    fw ls | dmenu -p "Project:" -i > $HOME/.current_project
+    (fw ls; echo home) | dmenu -p "Project:" -i | (read p; if test $p = "home"; then echo Leaving project; rm $HOME/.current_project; else echo "writing project"; echo $p > $HOME/.current_project; fi)
