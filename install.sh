@@ -54,7 +54,7 @@ clonedir() {
         src=$1$path
         if [[ $src -nt $dst ]]
         then
-            echo "+, "
+            echo -n "+, "
             dstdir=$(dirname $dst)
             [[ -d "$dstdir" ]] || mkdir -p "$dstdir"
             if [[ $(stat -c "%U" "$dstdir") = $(whoami) ]]
