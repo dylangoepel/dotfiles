@@ -2,6 +2,8 @@
 set nocompatible
 filetype off
 
+set clipboard=unnamedplus
+
 filetype plugin indent on
 call plug#begin(stdpath('data') . '/plugged')
 Plug 'neomake/neomake'

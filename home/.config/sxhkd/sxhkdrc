@@ -30,7 +30,7 @@ XF86MonBrightnessUp
     brightness up
 
 super + Return
-    alacritty
+    if test -z "$(cat ~/.current_project)"; then alacritty; else alacritty -e bash <(fw gen-workon `cat ~/.current_project`; echo zsh); fi
 super + d
     dmenu_run
 
@@ -45,3 +45,6 @@ super + o
 
 super + n
     monitors
+
+super + p
+    fw ls | dmenu -p "Project:" -i > $HOME/.current_project
