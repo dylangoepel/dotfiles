@@ -6,7 +6,7 @@ function get_volume {
 }
 
 function is_mute {
-  [ $(pactl list sinks | grep Mute | sed "s,\s,,g" | cut -d: -f 2) == "yes" ]
+  [ "$(pactl list sinks | grep Mute | sed "s,\s,,g" | cut -d: -f 2)" = "yes" ]
 }
 
 function set_volume {
