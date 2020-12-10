@@ -48,3 +48,6 @@ super + n
 
 super + p
     (fw ls; echo home) | dmenu -p "Project:" -i | (read p; if test $p = "home"; then echo Leaving project; rm $HOME/.current_project; else echo "writing project"; echo $p > $HOME/.current_project; fi)
+
+super + shift + b
+    btmenu

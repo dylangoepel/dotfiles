@@ -99,6 +99,7 @@ install sddm
 # window manager
 makegit https://github.com/dylangoepel/dwm.git ~/dev/dwm
 makegit https://github.com/dylangoepel/dmenu.git ~/dev/dwm
+makegit https://github.com/dylangoepel/btmenu.git ~/dev/btmenu
 install sxhkd
 install dunst
 install picom
