@@ -100,6 +100,7 @@ install sddm
 makegit https://github.com/dylangoepel/dwm.git ~/dev/dwm
 makegit https://github.com/dylangoepel/dmenu.git ~/dev/dwm
 makegit https://github.com/dylangoepel/btmenu.git ~/dev/btmenu
+makegit https://github.com/dylangoepel/pulsemenu.git ~/dev/pulsemenu
 install sxhkd
 install dunst
 install picom

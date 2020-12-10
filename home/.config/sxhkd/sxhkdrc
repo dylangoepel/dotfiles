@@ -51,3 +51,6 @@ super + p
 
 super + shift + b
     btmenu
+
+super + shift + s
+    pulsemenu
