@@ -1,0 +1,5 @@
+#!/bin/sh
+
+word=$(echo | dmenu -p "Word: " -l 0)
+
+curl https://pocket.dict.cc/\?s\=$word  | grep -Eo '<dd>.+</dd>' | grep -Eo '>[^<]+</a>|>[^<]+<kbd>' | sed -E 's,^>,,g; s,<.+>,,g; s,^ *$,,g; /^$/ d' | dmenu -p "Translation: " | xclip -i -selection clipboard

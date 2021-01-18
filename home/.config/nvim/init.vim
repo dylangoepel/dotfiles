@@ -7,6 +7,7 @@ set clipboard=unnamedplus
 filetype plugin indent on
 call plug#begin(stdpath('data') . '/plugged')
 Plug 'neomake/neomake'
+Plug 'leanprover/lean.vim'
 Plug 'gryf/wombat256grf'
 Plug 'lervag/vimtex'
 Plug 'SirVer/ultisnips'
@@ -84,4 +85,30 @@ hi Conceal ctermfg=NONE
 hi Conceal guifg=NONE
 hi Conceal guibg=NONE
 
+function OnLean()
+    iabbrev -> →
+    iabbrev <- ←
+    iabbrev \| ∣
+    iabbrev \< ⟨
+    iabbrev \> ⟩
+    iabbrev \ex "∃"
+    iabbrev \all "∀"
+    iabbrev \and "∧"
+    iabbrev \or "∨"
+    iabbrev \not "¬"
+    iabbrev \R ℝ
+    iabbrev \N ℕ
+    iabbrev \Z ℤ
+    iabbrev \1 ₁
+    iabbrev \2 ₂
+    iabbrev \3 ₃
+    iabbrev \4 ₄
+    iabbrev \5 ₅
+    iabbrev \6 ₆
+    iabbrev \7 ₇
+    iabbrev \8 ₈
+    iabbrev \9 ₉
+    iabbrev \0 ₀
+endfunction
 
+au FileType *.lean call OnLean()

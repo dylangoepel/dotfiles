@@ -30,8 +30,9 @@ XF86MonBrightnessUp
     brightness up
 
 super + Return
-    if test ! -f $HOME/.current_project; then alacritty; else alacritty -e bash <(fw gen-workon `cat ~/.current_project`; echo zsh); fi
-super + d
+    alacritty
+
+super + r
     dmenu_run
 
 super + F2
@@ -47,10 +48,16 @@ super + n
     monitors
 
 super + p
-    (fw ls; echo home) | dmenu -p "Project:" -i | (read p; if test $p = "home"; then echo Leaving project; rm $HOME/.current_project; else echo "writing project"; echo $p > $HOME/.current_project; fi)
+    (fw ls; echo home) | dmenu -p "Project:" -i | (read p; if test $p = "home"; then echo Leaving project; rm $HOME/.current_project; else echo "writing project"; echo workon $p > $HOME/.current_project; fi)
+
+super + shift + p
+    find ~/doc -mindepth 2 -type d | grep -v ".git" | sed -E 's,/home/[^/]+/doc/,,g' | dmenu -p "Directory:" -i | (read p; if test $p = "home"; then echo Leaving project; rm $HOME/.current_project; else echo "writing project"; echo cd ~/doc/$p > $HOME/.current_project; fi)
 
 super + shift + b
     btmenu
 
 super + shift + s
     pulsemenu
+
+super + d
+    dictcc

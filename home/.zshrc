@@ -207,3 +207,11 @@ _workon() {
 
 compdef _workon workon;
 compdef _workon nworkon;
+
+if [ -f ~/.current_project ]; then
+    source ~/.current_project
+else
+    cd ~
+fi
+
+source $HOME/.elan/env
