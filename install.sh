@@ -59,7 +59,12 @@ clonedir() {
             [[ -d "$dstdir" ]] || mkdir -p "$dstdir"
             if [[ $(stat -c "%U" "$dstdir") = $(whoami) ]]
             then
-                cp $src $dst
+		if [[ -f "$dst" ]]
+		then
+			rm $dst
+		fi
+		ln -s $src $dst
+#               cp $src $dst
             else
                 sudo cp $src $dst
             fi
@@ -135,6 +140,7 @@ install make
 install ghc
 install xwallpaper
 install nodejs
+aur neovim-remote
 
 # zsh theme
 aur zsh-theme-powerlevel9k

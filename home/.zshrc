@@ -2,6 +2,7 @@ export ZSH=$HOME"/.oh-my-zsh"
 export PATH=$PATH:~/.local/bin:~/go/bin:~/.cargo/bin
 export BROWSER=brave
 export EDITOR=nvim
+export TERM=ansi
 
 if [ ! -d ~/.oh-my-zsh ]
 then
@@ -25,6 +26,8 @@ source $ZSH/oh-my-zsh.sh
 export EDITOR='vim'
 
 alias vifm='vifm -c ":only"'
+alias vi="nvim"
+alias vim="nvim"
 alias loadtor="proxychains aria2c -o"
 alias load="aria2c -o"
 
@@ -210,8 +213,7 @@ compdef _workon nworkon;
 
 if [ -f ~/.current_project ]; then
     source ~/.current_project
-else
-    cd ~
 fi
 
 source $HOME/.elan/env
+[ -f "/home/dylan/.ghcup/env" ] && source "/home/dylan/.ghcup/env" # ghcup-env
