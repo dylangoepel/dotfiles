@@ -2,7 +2,7 @@ export ZSH=$HOME"/.oh-my-zsh"
 export PATH=$PATH:~/.local/bin:~/go/bin:~/.cargo/bin
 export BROWSER=brave
 export EDITOR=nvim
-export TERM=ansi
+export TERM=xterm-256color
 
 if [ ! -d ~/.oh-my-zsh ]
 then
