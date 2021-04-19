@@ -1,5 +1,5 @@
 export ZSH=$HOME"/.oh-my-zsh"
-export PATH=$PATH:~/.local/bin:~/go/bin:~/.cargo/bin
+export PATH=$PATH:~/.local/bin:~/go/bin:~/.cargo/bin:~/.emacs.d/bin
 export BROWSER=brave
 export EDITOR=nvim
 export TERM=xterm-256color
@@ -210,10 +210,6 @@ _workon() {
 
 compdef _workon workon;
 compdef _workon nworkon;
-
-if [ -f ~/.current_project ]; then
-    source ~/.current_project
-fi
 
 source $HOME/.elan/env
 [ -f "/home/dylan/.ghcup/env" ] && source "/home/dylan/.ghcup/env" # ghcup-env
