@@ -1,5 +1,5 @@
 #!/bin/bash
-set ${1:-get}
+set ${1:-get} ${2:-10}
 
 function get_volume {
   pactl list sinks | grep Volume | head -n 1 | cut -d/ -f 2 | sed -s "s, ,,g" | tr -d "%"
@@ -23,14 +23,7 @@ function set_mute {
     done
 }
 
-function send_notification {
-  iconSound="audio-volume-high"
-  iconMuted="audio-volume-muted"
-  volume=$(get_volume)
-  is_mute && dunstify -a "Volume updated." -i $iconMuted -r 2593 -u normal "0%" || dunstify -a "Volume updated." -i $iconSound -r 2593 -u normal "$volume%"
-}
- 
-sinks=$(pacmd list-sinks | grep index | sed "s,.*index: ,,g")
+sinks=$(pactl list sinks | grep "Sink #" | grep -Eo '[0-9]+')
 
 if [[ $1 == "cycle" ]]
 then
@@ -50,22 +43,19 @@ then
     dunstify -a "Volume" -i audio-volume-high -r 2593 "Changed output."
 fi
 
-for sink in $sinks
-do
-    if [[ $1 == "inc" ]]
-    then
-        set_volume +2%
-        send_notification
-    elif [[ $1 == "dec" ]]
-    then
-        set_volume -2%
-        send_notification
-    elif [[ $1 == "mute" ]]
-    then
-        set_mute
-        send_notification
-    elif [[ $1 == "get" ]]
-    then
-        pactl list sinks | tr -d "\t" | grep ^Volume | cut -d"/" -f 2 | tr -d " "
-    fi
-done
+if [[ $1 == "inc" ]]
+then
+    set_volume +2%
+elif [[ $1 == "dec" ]]
+then
+    set_volume -2%
+elif [[ $1 == "mute" ]]
+then
+    set_mute
+elif [[ $1 == "get" ]]
+then
+    pactl list sinks | tr -d "\t" | grep ^Volume | cut -d"/" -f 2 | tr -d " "
+elif [[ $1 == "set" ]]
+then
+    set_volume ${2}'%'
+fi

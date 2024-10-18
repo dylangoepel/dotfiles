@@ -1,0 +1,14 @@
+export PATH=$PATH:~/.local/bin:~/go/bin:~/.cargo/bin:~/.emacs.d/bin
+export BROWSER=brave
+export EDITOR=nvim
+export TERM=xterm-256color
+
+export FZF_BASE=/usr/share/fzf
+export FZF_DEFAULT_COMMAND=fzf
+
+alias bat="bat --style numbers"
+alias zat="xembed -e zathura"
+
+PS1="λ "
+
+[ -f "/home/dylan/.ghcup/env" ] && source "/home/dylan/.ghcup/env" # ghcup-env

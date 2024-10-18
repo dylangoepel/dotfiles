@@ -1,6 +1,0 @@
-#!/bin/bash
-
-while true; do
-  xsetroot -name "   $(dwm-wifistat)   $(dwm-batstat)   $(date +"%e %b %Y   %k:%M ")    "
-  sleep 5s
-done

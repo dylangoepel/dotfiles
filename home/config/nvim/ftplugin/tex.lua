@@ -1,0 +1,1 @@
+/home/dylan/.dotfiles/config/nvim/ftplugin/tex.lua

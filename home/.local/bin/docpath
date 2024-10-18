@@ -1,5 +1,0 @@
-#!/bin/sh
- Nerd Font
-find ~/doc ~/lib -type f | grep -E -e '\.pdf$' -e '\.tex$' |
-    sed 's,/home/[a-zA-Z]*,~,g' |
-    dmenu -fn "Hurmit Nerd Font:10" -l 20 -i | xclip -i -selection clipboard

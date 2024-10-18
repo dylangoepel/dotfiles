@@ -1,6 +1,0 @@
-#!/bin/bash
-for cap in $(cat /sys/class/power_supply/BAT?/capacity)
-do
-    echo -n $cap%\ 
-done
-echo

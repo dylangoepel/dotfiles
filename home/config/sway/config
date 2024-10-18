@@ -1,22 +1,24 @@
+input * {
+    xkb_layout "de"
+}
+
 set $mod Mod4
 floating_modifier $mod
 font pango:Hack 8
 
 bindsym XF86AudioRaiseVolume exec --no-startup-id bash volume inc
-bindsym Ctrl+F3 exec --no-startup-id exec bash volume inc
+bindsym Ctrl+F3 exec --no-startup-id bash volume inc
 
 bindsym XF86AudioLowerVolume exec --no-startup-id bash volume dec
-bindsym Ctrl+F2 exec --no-startup-id exec bash volume dec
+bindsym Ctrl+F2 exec --no-startup-id bash volume dec
 
 bindsym XF86AudioMute exec --no-startup-id bash volume mute
-bindsym Ctrl+F1 exec --no-startup-id exec bash volume mute
+bindsym Ctrl+F1 exec --no-startup-id bash volume mute
 
-bindsym Ctrl+F4 exec --no-startup-id exec bash volume cycle
+bindsym $mod+n exec --no-startup-id bash monitors
 
-bindsym XF86AudioNext exec --no-startup-id cmus-remote --next
-bindsym XF86AudioPrev exec --no-startup-id cmus-remote --prev
-bindsym XF86AudioPause exec --no-startup-id cmus-remote --pause
-bindsym XF86AudioStop exec --no-startup-id cmus-remote --stop
+bindsym Ctrl+F4 exec --no-startup-id bash volume cycle
+
 
 bindsym XF86MonBrightnessUp exec --no-startup-id sudo light -A 5
 bindsym XF86MonBrightnessDown exec --no-startup-id sudo light -U 5
@@ -24,14 +26,19 @@ bindsym XF86MonBrightnessDown exec --no-startup-id sudo light -U 5
 bindsym Ctrl+F5 exec --no-startup-id sudo light -S 1
 bindsym Ctrl+F6 exec --no-startup-id sudo light -S 60
 
-bindsym $mod+Return exec alacritty
-bindsym $mod+q kill
-bindsym $mod+d exec dmenu_run
+bindsym $mod+b exec --no-startup-id ~/.local/bin/modb cli
+bindsym ctrl+Shift+b exec --no-startup-id ~/.local/bin/enterbtuuid
 
-bindsym $mod+u exec st sudo pacman --noconfirm -Syu
-bindsym $mod+Shift+r exec i3 reload
-bindsym $mod+F2 exec brave
-bindsym $mod+F3 exec pavucontrol
+bindsym $mod+Return exec --no-startup-id kitty
+bindsym $mod+t exec --no-startup-id kitty --class floating
+bindsym $mod+Shift+a exec --no-startup-id pavucontrol
+bindsym $mod+Shift+b exec --no-startup-id firefox
+bindsym $mod+Shift+o exec --no-startup-id ~/.local/bin/docopen
+bindsym $mod+Shift+f exec --no-startup-id kitty --class floating yazi
+bindsym $mod+q kill
+bindsym $mod+d exec --no-startup-id dmenurun
+
+bindsym $mod+Shift+r exec --no-startup-id i3 reload
 bindsym $mod+h focus left
 bindsym $mod+j focus down
 bindsym $mod+k focus up
@@ -45,7 +52,6 @@ bindsym $mod+v split v
 bindsym $mod+f fullscreen toggle
 bindsym $mod+e layout toggle split
 bindsym $mod+Shift+space floating toggle
-bindsym $mod+space focus mode_toggle
 
 set $ws1 "1"
 set $ws2 "2"
@@ -80,11 +86,13 @@ bindsym $mod+Shift+8 move container to workspace $ws8
 bindsym $mod+Shift+9 move container to workspace $ws9
 bindsym $mod+Shift+0 move container to workspace $ws10
 
+bindsym $mod+Shift+minus move scratchpad
+bindsym $mod+minus scratchpad show
+
 bindsym $mod+Shift+c reload
 bindsym $mod+Shift+e exit 
 
-bindsym $mod+b exec --no-startup-id bib
-bindsym $mod+m exec --no-startup-id med
+bindsym $mod+Shift+s exec --no-startup-id ksnip -r -s
 
 mode "resize" {
         bindsym j resize shrink height 10 px or 10 ppt
@@ -98,10 +106,13 @@ mode "resize" {
 }
 
 for_window [class="Git-gui--askpass"] floating enable
+for_window [class="floating"] floating enable
+for_window [class="ksnip"] floating enable
+for_window [class="omenu"] floating enable
+for_window [class="Spotify"] floating enable
+for_window [class="pavucontrol"] floating enable
 
 bindsym $mod+r mode "resize"
-
-exec --no-startup-id nitrogen --restore
 
 # color defines for zenburn styled i3
 set $bg     #2c2c2e
@@ -121,11 +132,24 @@ client.unfocused            $bg        $bg         $ia
 client.focused_inactive     $bg        $bg         $ac
 client.urgent               $rd        $rd         $tx
 
-new_window pixel 1
+default_border pixel 1
+default_floating_border pixel 1
 
 bar {
         status_command i3status
+        font pango:CaskaydiaCove Nerd Font Mono 10
+        separator_symbol " | "
+        colors {
+                background #1F2D3AEE
+                statusline #ffffff
+                separator #1ABC9C
+                # colorclass       <border> <background> <text>
+                focused_workspace  #1ABC9C  #1ABC9C     #1F2D3A
+                inactive_workspace #1F2D3A  #1F2D3A     #1ABC9C
+        }
 }
 
 gaps inner 5
+gaps outer 2
 smart_gaps on
+

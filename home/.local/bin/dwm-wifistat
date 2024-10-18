@@ -1,9 +1,0 @@
-#!/bin/bash
- 
-wifi_signal=$(nmcli device wifi list | grep '^*' | awk -F'[ ][ ]+' '{print $7}')
- 
-if [ -z $wifi_signal ]; then
-  echo 睊
-else
-  echo 
-fi
