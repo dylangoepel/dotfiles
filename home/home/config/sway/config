@@ -17,7 +17,6 @@ bindsym Ctrl+F1 exec --no-startup-id bash volume mute
 
 bindsym $mod+n exec --no-startup-id bash monitors
 
-bindsym Ctrl+Shift+a exec --no-startup-id bash volume analog
 bindsym Ctrl+F4 exec --no-startup-id bash volume cycle
 
 
@@ -37,8 +36,9 @@ bindsym $mod+Shift+b exec --no-startup-id firefox
 bindsym $mod+Shift+o exec --no-startup-id ~/.local/bin/docopen
 bindsym $mod+Shift+f exec --no-startup-id kitty --class floating yazi
 bindsym $mod+q kill
-bindsym $mod+d exec dmenurun
-bindsym $mod+Shift+r exec --no-startup-id sway reload
+bindsym $mod+d exec --no-startup-id dmenurun
+
+bindsym $mod+Shift+r exec --no-startup-id i3 reload
 bindsym $mod+h focus left
 bindsym $mod+j focus down
 bindsym $mod+k focus up

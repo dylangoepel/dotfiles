@@ -1,61 +1,41 @@
 #!/bin/bash
 set ${1:-get} ${2:-10}
 
-function get_volume {
-  pactl list sinks | grep Volume | head -n 1 | cut -d/ -f 2 | sed -s "s, ,,g" | tr -d "%"
-}
-
-function is_mute {
-  [ "$(pactl list sinks | grep Mute | sed "s,\s,,g" | cut -d: -f 2)" = "yes" ]
-}
-
-function set_volume {
-    for sink in $(pactl list sinks | grep "^Sink" | grep -Eo "[0-9]+")
-    do
-        pactl set-sink-volume $sink $1
-    done
-}
-
-function set_mute {
-    for sink in $(pactl list sinks | grep "^Sink" | grep -Eo "[0-9]+")
-    do
-        pactl set-sink-mute $sink toggle
-    done
-}
-
 sinks=$(pactl list sinks | grep "Sink #" | grep -Eo '[0-9]+')
+
 
 if [[ $1 == "cycle" ]]
 then
-    current=$(pactl list sink-inputs | grep "Sink:" | head -n 1 | tr -d "\t" | sed "s,Sink: ,,g")
-    lastSink=$(echo $sinks | grep -Eo "[0-9]+ {0,1}$")
+    current=$(wpctl status | grep -E '\[vol: *0\.[0-9]+\]$' | grep "*" | grep -Eo '[0-9]{2,}+\.' | tr -d ".")
+    next=$(wpctl status | grep -E '\[vol: *0\.[0-9]+\]$' | grep -v "*" | head -n 1 | grep -Eo '[0-9]{2,}+\.' | tr -d ".")
 
-    new=$(( ($current + 1) % ($lastSink + 1) ))
-    echo $current
-    echo $new
+    echo moving sink-inputs from $current to $next
 
-    inputs=$(pactl list sink-inputs | grep "Sink Input #" | sed "s,Sink Input #,,g")
-
-    for input in $inputs
-    do
-        pactl move-sink-input $input $new
-    done
-    dunstify -a "Volume" -i audio-volume-high -r 2593 "Changed output."
-fi
-
-if [[ $1 == "inc" ]]
+    wpctl set-default $next
+    # dunstify -a "Volume" -i audio-volume-high -r 2593 "Changed output."
+elif [[ $1 == "analog" ]]
 then
-    set_volume +2%
+    firstAvailable=$(pactl list sinks \
+        | awk '/Active Port:/ { doPrint = 0 } doPrint { print($0) } /^\s*Ports:/ { doPrint = 1 }' \
+        | grep analog \
+        | grep -v "not available" \
+        | head -n 1 \
+        | gawk 'match($0, /^\s*([^ :]+):/, a) { print(a[1]) }')
+    c=$(pactl list short sinks | grep analog | head -n 1 | cut -f 2)
+    pactl set-sink-port $c $firstAvailable
+elif [[ $1 == "inc" ]]
+then
+    wpctl set-volume -l 1.5 @DEFAULT_AUDIO_SINK@ 2%+
 elif [[ $1 == "dec" ]]
 then
-    set_volume -2%
+    wpctl set-volume @DEFAULT_AUDIO_SINK@ 2%-
 elif [[ $1 == "mute" ]]
 then
-    set_mute
+    wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle
 elif [[ $1 == "get" ]]
 then
-    pactl list sinks | tr -d "\t" | grep ^Volume | cut -d"/" -f 2 | tr -d " "
+    wpctl get-volume @DEFAULT_AUDIO_SINK@ | sed 's/Volume: //'
 elif [[ $1 == "set" ]]
 then
-    set_volume ${2}'%'
+    wpctl set-volume @DEFAULT_AUDIO_SINK@ ${2}%
 fi
