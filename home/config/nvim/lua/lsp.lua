@@ -66,6 +66,8 @@ function lsp.config()
                         d = vim.lsp.buf.definition,
                         i = vim.lsp.buf.implementation,
                         r = vim.lsp.buf.references,
+                        h = vim.lsp.buf.hover,
+                        H = vim.lsp.buf.signature_help,
                     },
                     w = {
                         a = vim.lsp.buf.add_workspace_folder,

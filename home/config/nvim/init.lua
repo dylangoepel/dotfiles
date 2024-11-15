@@ -4,8 +4,6 @@ utils.setOpts({
     g = {
         mapleader = ' ',
         maplocalleader = '#',
-        loaded_netrw = 1,
-        loaded_netrwPlugin = 1,
         tex_flavor = 'latex',
         vimtex_view_general_viewer = 'zathura',
         vimtex_view_method = 'zathura',
@@ -37,51 +35,6 @@ utils.setOpts({
 require('plugins') -- lazy.nvim
 require('line') -- lualine
 
-local function buf_get_line()
-    return vim.api.nvim_buf_get_lines(0, vim.fn.getpos('.')[2] - 1, vim.fn.getpos('.')[2], true)[1]
-end
-
-local function buf_get_selection()
-  local _, srow, scol = unpack(vim.fn.getpos('v'))
-  local _, erow, ecol = unpack(vim.fn.getpos('.'))
-
-  -- visual line mode
-  if vim.fn.mode() == 'V' then
-    if srow > erow then
-      return vim.api.nvim_buf_get_lines(0, erow - 1, srow, true)
-    else
-      return vim.api.nvim_buf_get_lines(0, srow - 1, erow, true)
-    end
-  end
-
-  -- regular visual mode
-  if vim.fn.mode() == 'v' then
-    if srow < erow or (srow == erow and scol <= ecol) then
-      return vim.api.nvim_buf_get_text(0, srow - 1, scol - 1, erow - 1, ecol, {})
-    else
-      return vim.api.nvim_buf_get_text(0, erow - 1, ecol - 1, srow - 1, scol, {})
-    end
-  end
-
-  -- visual block mode
-  if vim.fn.mode() == '\22' then
-    local lines = {}
-    if srow > erow then
-      srow, erow = erow, srow
-    end
-    if scol > ecol then
-      scol, ecol = ecol, scol
-    end
-    for i = srow, erow do
-      table.insert(
-        lines,
-        vim.api.nvim_buf_get_text(0, i - 1, math.min(scol - 1, ecol), i - 1, math.max(scol - 1, ecol), {})[1]
-      )
-    end
-    return lines
-  end
-end
-
 local function tmux_send_lines(lines)
     local text = string.gsub(table.concat(lines, "\n"), "'", "'\"'\"'") .. "\n"
     vim.fn.system("tmux send-keys -t " .. vim.g.target_pane .. " -l '" .. text .. "'")
@@ -96,6 +49,7 @@ utils.setKeymap({
     },
     normal = {
         ['<leader>'] = {
+            ['<space>'] = '<c-^>',
             n = ':noh<cr>',
             l = {
                 l = ':Lazy<cr>',
@@ -108,9 +62,14 @@ utils.setKeymap({
                 f = '<c-w><c-w>:q!<cr>',
                 d = ':cd %:p:h<cr>',
             },
-            fc = ':e ~/.config/nvim/init.lua<cr>',
+            f = {
+                c = ':e ~/.config/nvim/init.lua<cr>',
+                n = ':e ~/.notes.md<cr>',
+                o = ':e %:h/',
+                ['+'] = ':let @+=@%<cr>',
+            },
             r = {
-                r = function() tmux_send_lines({ buf_get_line() }) end,
+                r = function() tmux_send_lines({ utils.buf_get_line() }) end,
                 s = ':let g:target_pane="%"<left>' ,
             },
             d = {
@@ -126,7 +85,7 @@ utils.setKeymap({
         }
     },
     visual = {
-        ['<leader>r'] = function() tmux_send_lines(buf_get_selection()) end,
+        ['<leader>r'] = function() tmux_send_lines(utils.buf_get_selection()) end,
     },
 })
 

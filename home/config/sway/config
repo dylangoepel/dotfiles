@@ -4,7 +4,7 @@ input * {
 
 set $mod Mod4
 floating_modifier $mod
-font pango:Hack 8
+font pango:Hack 1
 
 bindsym XF86AudioRaiseVolume exec --no-startup-id bash volume inc
 bindsym Ctrl+F3 exec --no-startup-id bash volume inc
@@ -14,8 +14,6 @@ bindsym Ctrl+F2 exec --no-startup-id bash volume dec
 
 bindsym XF86AudioMute exec --no-startup-id bash volume mute
 bindsym Ctrl+F1 exec --no-startup-id bash volume mute
-
-bindsym $mod+n exec --no-startup-id bash monitors
 
 bindsym Ctrl+Shift+a exec --no-startup-id bash volume analog
 bindsym Ctrl+F4 exec --no-startup-id bash volume cycle
@@ -35,9 +33,7 @@ bindsym $mod+t exec --no-startup-id kitty --class floating
 bindsym $mod+Shift+a exec --no-startup-id pavucontrol
 bindsym $mod+Shift+b exec --no-startup-id firefox
 bindsym $mod+Shift+o exec --no-startup-id ~/.local/bin/docopen
-bindsym $mod+Shift+f exec --no-startup-id kitty --class floating yazi
 bindsym $mod+q kill
-bindsym $mod+d exec dmenurun
 bindsym $mod+Shift+r exec --no-startup-id sway reload
 bindsym $mod+h focus left
 bindsym $mod+j focus down
@@ -50,7 +46,7 @@ bindsym $mod+Shift+l move right
 bindsym $mod+s split h
 bindsym $mod+v split v
 bindsym $mod+f fullscreen toggle
-bindsym $mod+e layout toggle split
+bindsym $mod+Space layout toggle stacking split
 bindsym $mod+Shift+space floating toggle
 
 set $ws1 "1"
@@ -138,6 +134,7 @@ default_floating_border pixel 1
 bar {
         status_command i3status
         font pango:CaskaydiaCove Nerd Font Mono 10
+        # font pango:Hack 10
         separator_symbol " | "
         colors {
                 background #1F2D3AEE

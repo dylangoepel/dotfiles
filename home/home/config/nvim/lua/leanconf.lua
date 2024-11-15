@@ -1,1 +1,0 @@
-/home/dylan/.dotfiles/config/nvim/lua/leanconf.lua

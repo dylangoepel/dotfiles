@@ -10,7 +10,8 @@ alias cat="bat --style plain"
 alias c='cd $(find * -type d | fzf); pwd'
 alias cl='sbcl --eval "(asdf:load-system \"sbcl-readline\")"'
 
-PS1="%F{117}λ%f "
+setopt PROMPT_SUBST
+PROMPT="%F{white}%~%f%F{178} λ%f "
 
 bindkey -s '^g' '\\
     | grep '

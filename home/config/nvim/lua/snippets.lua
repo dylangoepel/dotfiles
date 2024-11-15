@@ -84,4 +84,21 @@ function snippets.register_cmp(name)
     require('cmp').register_source(name, cmp_source)
 end
 
+_G.tab_action = function(n)
+	if require'cmp'.visible() then
+        if n > 0 then
+            return '<cmd>lua require\'cmp\'.select_next_item()<cr>'
+        else
+            return '<cmd>lua require\'cmp\'.select_prev_item()<cr>'
+        end
+	elseif vim.snippet.active({direction = n}) then
+        return '<cmd>lua vim.snippet.jump(' .. n .. ')<cr>'
+	else
+        return vim.api.nvim_replace_termcodes("<Tab>", true, true, true)
+	end
+end
+
+vim.keymap.set("i", "<Tab>", "v:lua._G.tab_action(1)", { expr = true })
+vim.keymap.set("i", "<S-Tab>", "v:lua._G.tab_action(-1)", { expr = true })
+
 return snippets
