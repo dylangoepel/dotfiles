@@ -1,0 +1,41 @@
+#!/bin/bash
+set ${1:-get} ${2:-10}
+
+sinks=$(pactl list sinks | grep "Sink #" | grep -Eo '[0-9]+')
+
+
+if [[ $1 == "cycle" ]]
+then
+    current=$(wpctl status | grep -E '\[vol: *0\.[0-9]+\]$' | grep "*" | grep -Eo '[0-9]{2,}+\.' | tr -d ".")
+    next=$(wpctl status | grep -E '\[vol: *0\.[0-9]+\]$' | grep -v "*" | head -n 1 | grep -Eo '[0-9]{2,}+\.' | tr -d ".")
+
+    echo moving sink-inputs from $current to $next
+
+    wpctl set-default $next
+    # dunstify -a "Volume" -i audio-volume-high -r 2593 "Changed output."
+elif [[ $1 == "analog" ]]
+then
+    firstAvailable=$(pactl list sinks \
+        | awk '/Active Port:/ { doPrint = 0 } doPrint { print($0) } /^\s*Ports:/ { doPrint = 1 }' \
+        | grep analog \
+        | grep -v "not available" \
+        | head -n 1 \
+        | gawk 'match($0, /^\s*([^ :]+):/, a) { print(a[1]) }')
+    c=$(pactl list short sinks | grep analog | head -n 1 | cut -f 2)
+    pactl set-sink-port $c $firstAvailable
+elif [[ $1 == "inc" ]]
+then
+    wpctl set-volume -l 1.5 @DEFAULT_AUDIO_SINK@ 2%+
+elif [[ $1 == "dec" ]]
+then
+    wpctl set-volume @DEFAULT_AUDIO_SINK@ 2%-
+elif [[ $1 == "mute" ]]
+then
+    wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle
+elif [[ $1 == "get" ]]
+then
+    wpctl get-volume @DEFAULT_AUDIO_SINK@ | sed 's/Volume: //'
+elif [[ $1 == "set" ]]
+then
+    wpctl set-volume @DEFAULT_AUDIO_SINK@ ${2}%
+fi
