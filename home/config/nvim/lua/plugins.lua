@@ -20,6 +20,10 @@ require("lazy").setup({
     { 'tpope/vim-repeat' }, -- remaps . to work with plugin commands
     { 'nvim-lua/plenary.nvim' }, -- functions missing from neovim
 
+
+    { 'williamboman/mason.nvim', opts = {} },
+    { 'williamboman/mason-lspconfig.nvim', opts = {} },
+
     { 'neovim/nvim-lspconfig', config = require'lsp'.config }, -- language server support
 
     { 'gpanders/nvim-parinfer' }, -- infer parentheses
@@ -34,8 +38,6 @@ require("lazy").setup({
             vim.cmd.colorscheme('rosebones')
         end
     },
-
-    { 'williamboman/mason.nvim', opts = {} },
 
     -- treesitter highlighting
     { 'kyazdani42/nvim-web-devicons', opts = {} },

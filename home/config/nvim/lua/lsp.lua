@@ -2,54 +2,17 @@ local lsp = {}
 
 
 -- :MasonInstall haskell-language-server gopls pyright clangd typescript-language-server texlab zls lua-language-server
-local servers = {
-    hls = { filetypes = {'haskell', 'hs'} },
-    gopls = { filetypes = {'go'}, root_dir = { "go.mod" } },
-    pyright = { filetypes = {'python', 'py'} },
-    clangd = { filetypes = {'c', 'h'} },
-    ts_ls = { "javascript", "javascriptreact", "javascript.jsx", "typescript", "typescriptreact", "typescript.tsx" },
-    texlab = { filetypes = { "tex" } },
-    zls = { filetypes = { "zig", "zir" } },
-    lua_ls = {
-        settings = {
-            Lua = {
-              runtime = {
-                version = 'LuaJIT',
-              },
-              diagnostics = {
-                globals = {'vim'},
-              },
-              workspace = {
-                library = vim.api.nvim_get_runtime_file("", true),
-              },
-              telemetry = {
-                enable = false,
-              },
-            },
-        }
-    }
-}
 
 function lsp.config()
     local lspconfig = require'lspconfig'
     local default_capabilities = require("cmp_nvim_lsp").default_capabilities()
-
-
-    for n, settings in pairs(servers) do
-        local rootdir = nil
-        if settings.root_dir ~= nil
-        then
-            rootdir = require'lspconfig'.util.root_pattern(settings.root_dir)
-        end
-        lspconfig[n].setup{
-            filetypes = settings.filetypes,
-            capabilities = default_capabilities,
-            telemetry = { enable = false },
-            cmd = settings.cmd,
-            settings = settings.settings,
-            root_dir = rootdir,
-        }
-    end
+    require'mason-lspconfig'.setup_handlers{
+        function(name)
+            lspconfig[name].setup{
+                capabilities = default_capabilities
+            }
+        end,
+    }
 
     -- lsp-specific bindings
     vim.diagnostic.config({ virtual_lines = { highlight_whole_line = false }, virtual_text = false })
