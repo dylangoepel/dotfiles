@@ -3,6 +3,11 @@ export BROWSER=firefox
 export EDITOR=nvim
 export DOCKER_HOST=unix://$XDG_RUNTIME_DIR/podman/podman.sock
 
+HISTFILE=~/.zsh_history
+HISTSIZE=10000
+SAVEHIST=10000
+setopt appendhistory
+
 export FZF_BASE=/usr/share/fzf
 export FZF_DEFAULT_COMMAND=fzf
 
@@ -38,7 +43,7 @@ function spotd() {
 [[ ! -r /home/dylan/.opam/opam-init/init.zsh ]] || source /home/dylan/.opam/opam-init/init.zsh  > /dev/null 2> /dev/null
 
 source ~/.zsh/zsh-fzy.plugin.zsh
-bindkey '\ec' fzy-cd-widget
+bindkey '^D'  fzy-cd-widget
 bindkey '^F'  fzy-file-widget
 bindkey '^R'  fzy-history-widget
 bindkey '^P'  fzy-proc-widget
@@ -47,6 +52,8 @@ zstyle :fzy:file command fd -I --one-file-system --type f
 zstyle :fzy:cd command fd -I --one-file-system --type d
 
 alias mkpdftex="latexmk -pvc -lualatex -f- -interaction=nonstopmode"
+
+alias ls=lsd
 
 alias bt="bluetoothctl"
 alias startx="sway"

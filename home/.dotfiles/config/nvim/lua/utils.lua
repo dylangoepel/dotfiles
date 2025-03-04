@@ -1,5 +1,19 @@
 local utils = {}
 
+function utils.removePrefix(s, pre)
+    if s:sub(1, pre:len()) == pre then
+        return s:sub(pre:len() + 1)
+    end
+    return s
+end
+
+function utils.bufferDir()
+    return utils.removePrefix(vim.fn.expand("%:p:h"), "oil://")
+end
+function utils.bufferPath()
+    return utils.removePrefix(vim.fn.expand("%:p"), "oil://")
+end
+
 function utils.setOpts(vals)
   for k, v in pairs(vals) do
       for kk, vv in pairs(v) do
@@ -49,6 +63,8 @@ function utils.setKeymap(map, opts)
             if type(v) == "table" then
                 if v.onEvent ~= nil then
                     vim.keymap.set(mode, prefix .. k, toggleAutocmd(v[1], v.onEvent), opts)
+                elseif v.opts ~= nil then
+                    vim.keymap.set(mode, prefix .. k, v[1], v.opts)
                 else
                     f(f, mode, prefix .. k, v)
                 end

@@ -35,10 +35,10 @@ local function markdownEnter()
     if filename == "" then
         return
     end
-    local n = filename:find('#page=')
+    local n = filename:find('?p=')
     if n ~= nil then
         local fname = filename:sub(1, n - 1)
-        local pageno = filename:sub(n + #'#page=')
+        local pageno = filename:sub(n + #'?p=')
         vim.cmd('Dispatch! zathura --page=' .. pageno .. ' "' .. vim.fn.expand("%:h") .. '/' .. fname .. '"')
     elseif has_suffix(filename, ".pdf") then
         vim.cmd('Dispatch! zathura "' .. vim.fn.expand("%:h") .. '/' .. filename .. '"')

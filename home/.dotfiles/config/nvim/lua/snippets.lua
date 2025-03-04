@@ -9,10 +9,11 @@ snippets.f = {
         { trigger = 'func', body = 'function $1($2)$0\nend' },
     },
     go = {
-        { trigger = 'func', body = 'func ${1:main}($2) {$0\n}' },
-        { trigger = 'httph', body = 'func ${1:handleHTTP}(w http.ResponseWriter, r *http.Request) {$0\n}' },
+        { trigger = 'func', body = 'func ${1:main}() {$0\n}' },
+        { trigger = 'htfn', body = 'func ${1:handleHTTP}(w http.ResponseWriter, r *http.Request) {$0\n}' },
+        { trigger = 'hterr', body = 'w.WriteHeader(500)\nfmt.Fprintf(w, "")\nlog.Printf("$0")' },
         { trigger = 'iferr', body = 'if err != nil {$0\n}' },
-        { trigger = 'pkg', body = 'package $1\n\nimport ($2)\n\n$0' },
+        { trigger = 'pkg', body = 'package $1\n\nimport ($0)\n\n' },
     },
     tex = {
         { trigger = 'rr', body = '\\mathbb{$1}', },
@@ -84,21 +85,32 @@ function snippets.register_cmp(name)
     require('cmp').register_source(name, cmp_source)
 end
 
-_G.tab_action = function(n)
-	if require'cmp'.visible() then
+function snippets.tab_action(n)
+    local cmp = require'cmp'
+    local selected_index = cmp.get_active_entry()
+	if cmp.visible() then
+        vim.print(selected_index)
         if n > 0 then
-            return '<cmd>lua require\'cmp\'.select_next_item()<cr>'
-        else
-            return '<cmd>lua require\'cmp\'.select_prev_item()<cr>'
+            if selected_index == nil then
+                cmp.select_next_item({count=0})
+            elseif not cmp.select_next_item() then
+                    cmp.confirm()
+            end
+        elseif not cmp.select_prev_item() then
+            cmp.confirm()
         end
-	elseif vim.snippet.active({direction = n}) then
-        return '<cmd>lua vim.snippet.jump(' .. n .. ')<cr>'
+    elseif vim.snippet.active({direction = n}) then
+        vim.snippet.jump(n)
 	else
-        return vim.api.nvim_replace_termcodes("<Tab>", true, true, true)
+        if n > 0 then
+            vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<Tab>", true, false, true), 'in', false)
+        else
+            vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<S-Tab>", true, false, true), 'in', false)
+        end
 	end
 end
 
-vim.keymap.set("i", "<Tab>", "v:lua._G.tab_action(1)", { expr = true })
-vim.keymap.set("i", "<S-Tab>", "v:lua._G.tab_action(-1)", { expr = true })
+vim.keymap.set("i", "<Tab>", function() snippets.tab_action(1) end)
+vim.keymap.set("i", "<S-Tab>", function() snippets.tab_action(-1) end)
 
 return snippets

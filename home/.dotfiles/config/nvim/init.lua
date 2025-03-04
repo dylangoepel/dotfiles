@@ -7,7 +7,7 @@ utils.setOpts({
         tex_flavor = 'latex',
         vimtex_view_general_viewer = 'zathura',
         vimtex_view_method = 'zathura',
-        completion_matching_strategy_list = {'exact', 'substring', 'fuzzy'},
+        completion_matching_strategy_list = { 'exact', 'substring', 'fuzzy' },
         target_pane = "%1"
     },
     opt = {
@@ -33,14 +33,14 @@ utils.setOpts({
 })
 
 require('plugins') -- lazy.nvim
-require('line') -- lualine
+require('line')    -- lualine
 
 local function ltrim(s)
-    return s:match'^%s*(.*)'
+    return s:match '^%s*(.*)'
 end
 
 local function rtrim(s)
-    return s:match'(.*)%s*$'
+    return s:match '(.*)%s*$'
 end
 
 local function trim(s)
@@ -53,6 +53,52 @@ local function tmux_send_lines(lines)
     vim.fn.system("tmux send-keys -t " .. vim.g.target_pane .. " -l '" .. text .. "'")
 end
 
+local function tmux_get_panes()
+    local handle = io.popen("tmux list-panes")
+    if handle == nil then
+        return nil
+    end
+    local result = handle:read("*a")
+    handle:close()
+
+    local panes = {}
+    while string.len(result) > 0 do
+        local i = result:find("%%") or result:find(" ")
+        if i == nil then
+            vim.print("could not find %:", result)
+            return nil
+        end
+        result = result:sub(i + 1)
+        local j = result:find("\n")
+        if j == nil then
+            vim.print("could not find newline:", result)
+            return nil
+        end
+        local jj = result:find(" ")
+        if jj ~= nil then
+            j = math.min(j, jj)
+        end
+        local m = tonumber(result:sub(0, j))
+        if m == nil then
+            vim.print("could not parse number:", result:sub(0, j))
+            return nil
+        end
+        result = result:sub(j + 1)
+        table.insert(panes, m)
+    end
+
+    return panes
+end
+
+local function tmux_get_newest_pane()
+    local panes = tmux_get_panes()
+    local n = 0
+    for _, v in ipairs(panes) do
+        n = math.max(n, v)
+    end
+    return n
+end
+
 utils.setKeymap({
     terminal = {
         jk = '<c-\\><c-n>',
@@ -61,6 +107,7 @@ utils.setKeymap({
         jk = '<esc>',
     },
     normal = {
+        ['-'] = ':e %:p:h/<cr>',
         ['<leader>'] = {
             ['<space>'] = '<c-^>',
             n = ':noh<cr>',
@@ -68,24 +115,34 @@ utils.setKeymap({
                 l = ':Lazy<cr>',
                 m = ':Mason<cr>',
             },
-            s = {
-                e = ':enew<cr>',
-                q = ':q!<cr>',
-                t = ':term<cr>',
-                f = '<c-w><c-w>:q!<cr>',
-                d = ':cd %:p:h<cr>',
-            },
+            ['qq'] = ':q<cr>',
+            ['ww'] = ':w<cr>',
+            ['tt'] = function()
+                local oil = require'oil'
+                local entry = oil.get_cursor_entry()
+                if entry == nil then
+                    return
+                end
+                vim.fn.execute('! touch ' .. oil.get_current_dir() .. oil.get_cursor_entry().name)
+            end,
+            ['cc'] = function() vim.cmd('cd ' .. utils.bufferDir()) end,
             f = {
-                c = ':e ~/.config/nvim/init.lua<cr>',
-                n = ':e ~/.notes.md<cr>',
-                o = ':e %:h/',
-                ['+'] = ':let @+=@%<cr>',
+                C = ':e ~/.config/nvim/init.lua<cr>',
+                N = ':e ~/.notes.md<cr>',
             },
             r = {
                 r = function() tmux_send_lines({ utils.buf_get_line() }) end,
                 s = ':let g:target_pane="%"<left>',
+                l = {
+                    function()
+                        return ':let g:target_pane="%' .. tmux_get_newest_pane() .. '"<cr>'
+                    end,
+                    opts = {
+                        expr = true
+                    },
+                },
                 x = function() tmux_send_lines({ vim.b.dispatch }) end,
-                d = function() tmux_send_lines({ "cd " .. vim.fn.expand("%:p:h") }) end,
+                d = function() tmux_send_lines({ "cd " .. utils.bufferDir() }) end,
             },
             d = {
                 d = ':Dispatch<cr>',
@@ -119,7 +176,17 @@ utils.perFiletype({
         vim.b.dispatch = "python " .. vim.fn.expand("%:p")
     end,
     ['*-compose.yaml'] = function()
-        vim.b.dispatch = "podman-compose -f " .. vim.fn.expand("%:p") .. " up -d"
+        vim.b.dispatch = "docker-compose -f " .. vim.fn.expand("%:p") .. " build"
+        utils.setKeymap({
+            normal = {
+                ["<leader>dU"] = function()
+                    vim.cmd(":Dispatch! docker-compose -f " .. vim.fn.expand("%:p") .. " down")
+                end,
+                ["<leader>du"] = function()
+                    vim.cmd(":Dispatch docker-compose -f " .. vim.fn.expand("%:p") .. " up")
+                end,
+            },
+        })
     end,
     ['*.go'] = function()
         vim.b.dispatch = "go build -v"
@@ -128,6 +195,3 @@ utils.perFiletype({
         vim.b.dispatch = "cabal build"
     end,
 })
-
-
-vim.cmd.colorscheme('sonokai')

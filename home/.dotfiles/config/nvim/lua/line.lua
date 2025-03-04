@@ -120,8 +120,9 @@ ins_left {
 }
 
 ins_left {
-  'filename',
-  cond = conditions.buffer_not_empty,
+  function()
+      return require'utils'.bufferPath()
+  end,
   color = { fg = colors.white, gui = 'bold' },
 }
 
