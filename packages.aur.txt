@@ -1,0 +1,4 @@
+yay
+rcm
+wbg
+librewolf-bin

@@ -5,9 +5,9 @@ buildAur() {
     repoUrl="$1"
     buildDir=$(mktemp -d)
     echo "[***] build $repoUrl"
-    git clone "$repoUrl" "$buildDir"
+    git clone "$repoUrl" "$buildDir" || return "$?"
     pushd "$buildDir"
-    makepkg -si
+    makepkg -si || return "$?"
     popd
     rm -rf "$buildDir"
 }
@@ -16,24 +16,21 @@ buildMake() {
     repoUrl="$1"
     buildDir=$(mktemp -d)
     echo "[***] build $repoUrl"
-    git clone "$repoUrl" "$buildDir"
+    git clone "$repoUrl" "$buildDir" || return "$?"
     pushd "$buildDir"
-    make
-    sudo make install
+    make || return "$?"
+    sudo make install || return "$?"
     popd
     rm -rf "$buildDir"
 }
 
-yay -Qq >/dev/null || buildAur https://aur.archlinux.org/yay.git
-lsrc >/dev/null || buildAur https://aur.archlinux.org/rcm.git
+sudo pacman -S --needed --noconfirm $(cat packages.txt | tr "\n" " ") || return "$?"
 
-[ -d /usr/share/fonts/TTF/MonoLisa ] || sudo git clone https://github.com/koprab/monalisa-font.git /usr/share/fonts/TTF/MonoLisa
-
-sudo pacman -Syyu
-sudo pacman -S --noconfirm picom kitty pavucontrol zathura zathura-pdf-mupdf mpv thunderbird lsd fzf zsh neovim emacs gcc go python python-pip yt-dlp tmux entr alsa-utils git make ghc xwallpaper nodejs pipewire pipewire-pulse texlive texlive-science texlive-humanities texlive-latexextra inkscape niri greetd greetd-tuigreet
-yay -S --noconfirm wbg librewolf-bin
-
-cp -rf home ~/.dotfiles
-
-sudo systemctl enable greetd-tuigreet
-rcup -v
+cat packages.aur.txt | while read p; do
+    if pacman -Qq | grep -E "^$p$" >/dev/null
+    then
+        echo "$p is already installed."
+    else
+        buildAur "https://aur.archlinux.org/$p.git"
+    fi
+done
