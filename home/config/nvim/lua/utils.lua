@@ -123,5 +123,58 @@ function utils.buf_get_selection()
   end
 end
 
+function utils.has_suffix(s, t)
+    return s:sub(-#t) == t
+end
+function utils.has_prefix(s, t)
+    return s:sub(0, #t) == t
+end
+
+function utils.get_region_inside(open, close)
+    local pos = vim.fn.getpos('.')
+    local line = vim.api.nvim_buf_get_lines(0, pos[2] - 1, pos[2], true)[1]
+    local endPos = line:sub(pos[3]):find(close)
+    if endPos == nil then
+        return ""
+    end
+    local startPos = nil
+    for i = 1,endPos + pos[3] - 1 do
+        local c = string.sub(line, endPos + pos[3] - 1 - i, endPos + pos[3] - 1 - i)
+        if c == open then
+            startPos = endPos + pos[3] - 1 - i
+            break
+        end
+    end
+    if startPos == nil then
+        return ""
+    end
+    return line:sub(startPos + 1, endPos + pos[3] - 2)
+end
+
+function utils.get_paren_region()
+    return utils.get_region_inside('(', ')')
+end
+
+function utils.markdownEnter()
+    local filename = utils.get_paren_region()
+    if filename == "" then
+        return
+    end
+    local n = filename:find('?p=')
+    if n ~= nil then
+        local fname = filename:sub(1, n - 1)
+        local pageno = filename:sub(n + #'?p=')
+        vim.cmd('Dispatch! zathura --page=' .. pageno .. ' "' .. vim.fn.expand("%:h") .. '/' .. fname .. '"')
+    elseif utils.has_suffix(filename, ".pdf") then
+        vim.cmd('Dispatch! zathura "' .. vim.fn.expand("%:h") .. '/' .. filename .. '"')
+    elseif utils.has_prefix(filename, "http://") or utils.has_prefix(filename, "https://")  then
+        vim.cmd('Dispatch! firefox "' .. filename .. '"')
+    elseif utils.has_suffix(filename, ".html") then
+        vim.cmd('Dispatch! firefox "' .. vim.fn.expand("%:h") .. '/' .. filename .. '"')
+    else
+        vim.cmd('e ' .. vim.fn.expand("%:h") .. '/' .. filename)
+    end
+end
+
 
 return utils

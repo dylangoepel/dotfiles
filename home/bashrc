@@ -12,3 +12,5 @@ alias zat="xembed -e zathura"
 PS1="λ "
 
 [ -f "/home/dylan/.ghcup/env" ] && source "/home/dylan/.ghcup/env" # ghcup-env
+
+export DISPLAY=":0"

@@ -6,16 +6,31 @@ local lsp = {}
 function lsp.config()
     local lspconfig = require'lspconfig'
     local default_capabilities = require("cmp_nvim_lsp").default_capabilities()
-    require'mason-lspconfig'.setup_handlers{
-        function(name)
-            lspconfig[name].setup{
-                capabilities = default_capabilities
-            }
-        end,
-    }
+
+    vim.lsp.config('*', {
+        capabilities = default_capabilities,
+        root_markers = { '.git' },
+    })
+    vim.lsp.config('gopls', {
+        capabilities = default_capabilities,
+        root_markers = { 'go.mod', '.git' },
+    })
+    vim.lsp.config('hls', {
+        capabilities = default_capabilities,
+        root_markers = { 'dist', '.git' },
+    })
+    vim.lsp.config('ts_ls', {
+        capabilities = default_capabilities,
+        root_markers = { 'package.json', '.git' },
+    })
+    vim.lsp.config('lua_ls', {
+        capabilities = default_capabilities,
+        root_markers = { 'init.lua', '.git' },
+    })
+    vim.lsp.enable('hls')
 
     -- lsp-specific bindings
-    vim.diagnostic.config({ virtual_lines = { highlight_whole_line = false }, virtual_text = false })
+    vim.diagnostic.config({ virtual_text = false })
     vim.api.nvim_create_autocmd('LspAttach', {
       group = vim.api.nvim_create_augroup('UserLspConfig', {}),
       callback = function(ev)
@@ -38,6 +53,7 @@ function lsp.config()
                         r = vim.lsp.buf.references,
                         h = vim.lsp.buf.hover,
                         H = vim.lsp.buf.signature_help,
+                        t = function() require("tiny-inline-diagnostic").toggle() end
                     },
                     w = {
                         a = vim.lsp.buf.add_workspace_folder,

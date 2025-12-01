@@ -20,7 +20,7 @@ utils.setOpts({
         mouse = 'a',
         relativenumber = true,
         number = true,
-        foldmethod = 'manual',
+        foldmethod = 'marker',
         completeopt = 'menuone,noinsert,noselect',
         scrolloff = 10,
         tabstop = 4,
@@ -51,6 +51,10 @@ local function tmux_send_lines(lines)
     local text = trim(string.gsub(table.concat(lines, "\n"), "'", "'\"'\"'")) .. "\n"
 
     vim.fn.system("tmux send-keys -t " .. vim.g.target_pane .. " -l '" .. text .. "'")
+end
+
+local function tmux_send_keys(keys)
+    vim.fn.system("tmux send-keys -t " .. vim.g.target_pane .. " '" .. table.concat(keys, "' '") .. "'")
 end
 
 local function tmux_get_panes()
@@ -108,27 +112,24 @@ utils.setKeymap({
     },
     normal = {
         ['-'] = ':e %:p:h/<cr>',
+        ['<C-Enter>'] = function() vim.cmd('Dispatch! kitty --detach --directory ' .. utils.bufferDir()) end,
+        ['<C-s>'] = ':w<cr>',
+        ['<C-q>'] = ':q<cr>',
         ['<leader>'] = {
+            ['<cr>'] = function()
+                tmux_send_keys({'C-c'})
+                tmux_send_keys({'Up', 'Enter'})
+            end,
             ['<space>'] = '<c-^>',
+            ['-'] = ':e ~/<cr>',
             n = ':noh<cr>',
             l = {
                 l = ':Lazy<cr>',
                 m = ':Mason<cr>',
             },
-            ['qq'] = ':q<cr>',
-            ['ww'] = ':w<cr>',
-            ['tt'] = function()
-                local oil = require'oil'
-                local entry = oil.get_cursor_entry()
-                if entry == nil then
-                    return
-                end
-                vim.fn.execute('! touch ' .. oil.get_current_dir() .. oil.get_cursor_entry().name)
-            end,
-            ['cc'] = function() vim.cmd('cd ' .. utils.bufferDir()) end,
-            f = {
-                C = ':e ~/.config/nvim/init.lua<cr>',
-                N = ':e ~/.notes.md<cr>',
+            y = {
+                y = function() vim.cmd('let @+=@%') end,
+                p = function() vim.cmd('let @+="' .. utils.bufferDir() .. '"') end,
             },
             r = {
                 r = function() tmux_send_lines({ utils.buf_get_line() }) end,
@@ -146,6 +147,7 @@ utils.setKeymap({
             },
             d = {
                 d = ':Dispatch<cr>',
+                ['<space>'] = ':Dispatch!<cr>',
                 t = {
                     "Dispatch!",
                     onEvent = 'BufWritePost',
@@ -153,17 +155,22 @@ utils.setKeymap({
                 c = ':cclose<cr>',
                 l = ':Copen<cr>',
                 s = ':let b:dispatch = ""<left>',
+            },
+            f = {
+                ['.'] = ':e $PWD/<cr>',
+                ['r'] = ':e oil-ssh://pi.local//mnt/<cr>',
+                C = ':e ~/.config/nvim/init.lua<cr>',
             }
         }
     },
     visual = {
-        ['<leader>rr'] = function() tmux_send_lines(utils.buf_get_selection()) end,
+        ['<leader>r'] = function() tmux_send_lines(utils.buf_get_selection()) end,
     },
 })
 
 utils.perFiletype({
     ['*.tex'] = function()
-        vim.b.dispatch = "latexmk -f- -CA -pdf " .. vim.fn.expand("%:p")
+        vim.b.dispatch = "latexmk -f- -pdf " .. vim.fn.expand("%:p")
         utils.setKeymap({
             normal = {
                 ["<leader>do"] = function()
@@ -174,6 +181,16 @@ utils.perFiletype({
     end,
     ['*.py'] = function()
         vim.b.dispatch = "python " .. vim.fn.expand("%:p")
+    end,
+    ['*.md'] = function()
+        vim.b.dispatch = "pandoc --template eisvogel -f gfm -t pdf " .. vim.fn.expand("%:p") .. " -o " .. vim.fn.expand("%:p:r") .. ".pdf"
+        utils.setKeymap({
+            normal = {
+                ["<leader>do"] = function()
+                    vim.cmd(":Dispatch! zathura " .. vim.fn.expand("%:p:r") .. ".pdf")
+                end,
+            },
+        })
     end,
     ['*-compose.yaml'] = function()
         vim.b.dispatch = "docker-compose -f " .. vim.fn.expand("%:p") .. " build"

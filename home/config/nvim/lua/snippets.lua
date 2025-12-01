@@ -8,17 +8,49 @@ snippets.f = {
     lua = {
         { trigger = 'func', body = 'function $1($2)$0\nend' },
     },
+    typescriptreact = {
+        { trigger = 'compp', body = [[ 
+type $1Props = {};
+type $1State = {};
+class $1 extends Component<$1Props, $1State> {
+    constructor() {
+        super();
+        this.state = {};
+    }
+
+    render(props: Readonly<$1Props>, state: Readonly<$1State>) {
+        return <>$0
+        </>;
+    }
+}
+]] },
+        { trigger = 'tgs', body = '<$0 />' },
+        { trigger = 'tgg', body = [[<$1$0>
+</$1>]]},
+        { trigger = 'inpt', body = '<input type="$1"$0 />' },
+        { trigger = 'div', body = '<div$1>$0</div>' },
+        { trigger = 'span', body = '<span$1>$0</span>' },
+        { trigger = 'pp', body = '<p$1>$0</p>' }
+    },
     go = {
-        { trigger = 'func', body = 'func ${1:main}() {$0\n}' },
-        { trigger = 'htfn', body = 'func ${1:handleHTTP}(w http.ResponseWriter, r *http.Request) {$0\n}' },
-        { trigger = 'hterr', body = 'w.WriteHeader(500)\nfmt.Fprintf(w, "")\nlog.Printf("$0")' },
+        { trigger = 'hts', body = 'func ${1:handleHTTP}(w http.ResponseWriter, r *http.Request) {$0\n}' },
         { trigger = 'iferr', body = 'if err != nil {$0\n}' },
-        { trigger = 'pkg', body = 'package $1\n\nimport ($0)\n\n' },
+        { trigger = 'pkg', body = 'package $1\n\nimport ($0)\n' },
+        { trigger = 'fpr', body = 'fmt.Fprintf(w, "$0")' },
+        { trigger = 'lpr', body = 'log.Printf("$0")' },
+        { trigger = 'whr', body = 'w.WriteHeader(http.Status$0)' },
     },
     tex = {
-        { trigger = 'rr', body = '\\mathbb{$1}', },
+        { trigger = 'bb', body = '\\mathbb{$1}', },
+        { trigger = 'begg', body = [[
+\begin{$1}
+    $0
+\end{$1}
+]], },
         { trigger = 'opr', body = '\\operatorname{$1}', },
-        { trigger = 'eqq', body = '\\begin{align*}$0\n\\end{align*}' },
+        { trigger = 'sf', body = '\\mathsf{$1}', },
+        { trigger = 'cal', body = '\\mathcal{$1}', },
+        { trigger = 'leftt', body = '\\left$1$0\\right$1' },
         { trigger = 'docpre', body = [[
 \documentclass{article}
 \usepackage[T1]{fontenc}
@@ -46,6 +78,8 @@ $0
         },
     },
 }
+
+snippets.f.markdown = snippets.f.tex;
 
 function snippets.get_buf_snips()
     local ft = vim.bo.filetype
@@ -89,10 +123,10 @@ function snippets.tab_action(n)
     local cmp = require'cmp'
     local selected_index = cmp.get_active_entry()
 	if cmp.visible() then
-        vim.print(selected_index)
         if n > 0 then
             if selected_index == nil then
-                cmp.select_next_item({count=0})
+                cmp.select_next_item()
+                cmp.select_prev_item()
             elseif not cmp.select_next_item() then
                     cmp.confirm()
             end

@@ -1,5 +1,5 @@
 export PATH=$PATH:~/.local/bin:~/go/bin:~/.cargo/bin:~/.emacs.d/bin
-export BROWSER=firefox
+export BROWSER=librewolf
 export EDITOR=nvim
 export DOCKER_HOST=unix://$XDG_RUNTIME_DIR/podman/podman.sock
 
@@ -21,7 +21,6 @@ PROMPT="[%F{white}%~%f] %F{178}λ%f "
 
 bindkey -s '^g' '\\
     | grep '
-[ -f "/home/dylan/.ghcup/env" ] && source "/home/dylan/.ghcup/env" # ghcup-env
 
 function md() {
     infile=$1
@@ -53,7 +52,7 @@ zstyle :fzy:cd command fd -I --one-file-system --type d
 
 alias mkpdftex="latexmk -pvc -lualatex -f- -interaction=nonstopmode"
 
-alias ls=lsd
+alias l='lsd -l'
 
 alias bt="bluetoothctl"
 alias startx="sway"
@@ -65,3 +64,84 @@ alias startx="sway"
 export BUN_INSTALL="$HOME/.bun"
 export PATH="$BUN_INSTALL/bin:$PATH"
 export TERM=xterm-256color
+
+dff() {
+    for x in "$@"
+    do
+        df -h "$x" \
+            | awk 'NR == 2 {print "'"$x"': " $3 "/" $2}'
+    done
+}
+
+mdd() {
+    while true 
+    do
+        dff "$@"
+        sleep 5
+        for x in "$@"
+        do
+            echo -ne '\e[A\r\e[K'
+        done
+    done
+}
+
+boop() {
+    play -n synth 0.05 sin 1000 $@ 2>/dev/null
+}
+beep() {
+    play -n synth 0.1 sin 1000 sin 800 $@ delay 0 +0.1 2>/dev/null
+}
+
+ncc() {
+    for p in "${@:2}"
+    do
+        echo -n "\e[K$p: "
+        nc -zw1 $1 $p
+        if [ "$?" -eq 0 ]
+        then
+            echo -e "\r\e[K$p: open."
+            beep
+        else
+            echo -ne "closed.\r"
+            boop
+            sleep 0.2
+        fi
+    done
+    echo -ne "\r\e[K"
+}
+ncw() {
+    echo -ne "\e[K...\r"
+    while true
+    do
+        nc -zw2 $1 $2
+        if [ "$?" -eq 0 ]
+        then
+            echo -e "\e[K$1 $2: open."
+            beep
+            break
+        else
+            echo -ne "\e[K$1 $2: closed.\r"
+            boop vol 0.3
+            sleep 2
+        fi
+        echo -ne "\e[K...\r"
+    done
+}
+sshw() {
+    ncw $1 22 && ssh $@
+}
+alias ytdl="yt-dlp -t mp4 -o '%(uploader)s/%(upload_date)s %(id)s %(title)s.%(ext)s'"
+alias ytdlx="yt-dlp -o '%(uploader)s/%(upload_date)s %(id)s %(title)s.%(ext)s' --extract-audio -t mp3"
+
+dl() {
+    ytdl -t mp4 --download-archive "archive.txt" "$@"
+}
+dlx() {
+    ytdlx --download-archive "archive.txt" "$@"
+}
+
+alias rcp='rsync --progress'
+alias srcp='sudo rsync --progress'
+alias ffprobe='ffprobe -hide_banner'
+
+[ -f "/home/dylan/.ghcup/env" ] && . "/home/dylan/.ghcup/env" # ghcup-env

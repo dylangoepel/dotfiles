@@ -30,8 +30,10 @@ lsrc >/dev/null || buildAur https://aur.archlinux.org/rcm.git
 [ -d /usr/share/fonts/TTF/MonoLisa ] || sudo git clone https://github.com/koprab/monalisa-font.git /usr/share/fonts/TTF/MonoLisa
 
 sudo pacman -Syyu
-sudo pacman -S --noconfirm sddm sway picom firefox kitty pavucontrol zathura zathura-pdf-mupdf mpv thunderbird lsd fzf zsh neovim emacs gcc go python python-pip yt-dlp tmux entr alsa-utils git make ghc xwallpaper nodejs pipewire pipewire-pulse texlive texlive-science texlive-humanities texlive-latexextra inkscape
-yay -S --noconfirm wlprop wbg
+sudo pacman -S --noconfirm picom kitty pavucontrol zathura zathura-pdf-mupdf mpv thunderbird lsd fzf zsh neovim emacs gcc go python python-pip yt-dlp tmux entr alsa-utils git make ghc xwallpaper nodejs pipewire pipewire-pulse texlive texlive-science texlive-humanities texlive-latexextra inkscape niri greetd greetd-tuigreet
+yay -S --noconfirm wbg librewolf-bin
 
 cp -rf home ~/.dotfiles
+
+sudo systemctl enable greetd-tuigreet
 rcup -v
